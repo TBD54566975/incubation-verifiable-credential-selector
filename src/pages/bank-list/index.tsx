@@ -29,22 +29,23 @@ const BankListScreen: React.FC<Props> = ({ navigation }) => {
     <div className="h-full justify-between bg-white">
       <Header image="https://derrint.sirv.com/Images/sophtron/logos/Sophtron.png" />
 
-      <div className="flex-1 grow p-5 py-0">
+      <div className="flex-1 grow p-5 pb-10">
         <div className="mb-3 text-lg font-semibold text-black">
           Select Bank to Connect
         </div>
 
         <Input
           placeholder="Search Bank"
-          value={q}
-          onChange={(text: string) => setState({ ...state, q: text })}
+          onChange={(text: string) => {
+            setState({ ...state, q: text });
+          }}
           icon={<AiOutlineSearch size={20} color="#222222" />}
         />
 
         {banks.map((bank: any) => (
           <button
             key={bank.id}
-            className={`flex flex-row items-center border-b border-[#E7E7E7] p-4`}
+            className={`flex w-full flex-row items-center border-b border-[#E7E7E7] p-4`}
             onClick={() => {
               navigation.navigate('BankLogin', {
                 bank,
@@ -52,20 +53,24 @@ const BankListScreen: React.FC<Props> = ({ navigation }) => {
             }}
           >
             <div className="w-4/12">
-              <img src={bank.image} className="h-10 w-auto" alt="" />
+              <img
+                src={bank.image}
+                className="h-10 w-auto object-contain"
+                alt=""
+              />
             </div>
-            <div className="w-8/12 pl-2">
-              <div className="font-sans text-base text-tertiary">
+            <div className="w-8/12 pl-5">
+              <div className="text-left font-sans text-base text-tertiary">
                 {bank.name}
               </div>
             </div>
           </button>
         ))}
         {banks.length === 0 && (
-          <div className="my-5 items-center">
+          <div className="my-16 items-center">
             <img
               src="https://derrint.sirv.com/Images/sophtron/illustration-not-found.png"
-              className="my-5 h-48 w-full"
+              className="my-5 h-48 w-full object-contain"
               alt=""
             />
             <div className="my-4 text-center font-sans text-lg font-bold">

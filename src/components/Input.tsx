@@ -2,7 +2,6 @@
 import React from 'react';
 
 interface Props {
-  value: any;
   placeholder?: string;
   onChange: any;
   icon?: any;
@@ -12,7 +11,6 @@ interface Props {
 }
 
 const Input: React.FC<Props> = ({
-  value,
   placeholder,
   onChange,
   icon,
@@ -39,7 +37,7 @@ const Input: React.FC<Props> = ({
           : isFocusOnTextInput
           ? 'border-[#0C95DF] bg-[#F3FBFF]'
           : 'border-[#BBBBBB] bg-[#FAFAFA]'
-      } mb-5 flex flex-row items-center rounded-xl border py-4 px-5 ${className} `}
+      } mb-5 flex w-full flex-row items-center rounded-xl border py-4 px-5 ${className} `}
       onClick={() => focusText()}
     >
       {icon ? <div className={`mr-4 w-5 items-center`}>{icon}</div> : null}
@@ -47,8 +45,7 @@ const Input: React.FC<Props> = ({
         type={isPassword ? 'password' : 'text'}
         className="w-full bg-transparent font-sans text-base leading-5 text-black placeholder:text-[#01293B80] focus:outline-none"
         placeholder={placeholder || ''}
-        value={value}
-        onChange={(text: any) => onChange(text)}
+        onChange={(e: any) => onChange(e.target.value)}
         autoCapitalize={'none'}
         autoComplete={'off'}
         onFocus={() => {

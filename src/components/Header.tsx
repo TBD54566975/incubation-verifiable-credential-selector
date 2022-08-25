@@ -21,7 +21,7 @@ const Header: React.FC<Props> = ({ isBackButtonVisible = true, image }) => {
       )}
 
       <div className="w-8/12 items-center">
-        <img src={image} className="h-14 w-full" alt="Icon" />
+        <img src={image} className="h-14 w-full object-contain" alt="Icon" />
       </div>
 
       <div className="w-2/12" />
