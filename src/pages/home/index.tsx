@@ -1,9 +1,11 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { htw } from '@/utils/Helper';
 
 const HomeScreen: React.FC = () => {
+  const router = useRouter();
+
   return (
     <div className="relative flex h-screen flex-col justify-between bg-white p-5">
       <div className="absolute -top-5 left-0 w-full items-center justify-center opacity-70">
@@ -30,11 +32,16 @@ const HomeScreen: React.FC = () => {
       </div>
 
       <div className="w-full">
-        <Link href="/bank-list" passHref>
-          <button className="mb-5 w-full rounded-full bg-primary py-[18px] text-center font-sans text-lg font-semibold text-white">
-            Connect
-          </button>
-        </Link>
+        <button
+          onClick={() => {
+            router.push({
+              pathname: '/bank-list',
+            });
+          }}
+          className="mb-5 w-full rounded-full bg-primary py-[18px] text-center font-sans text-lg font-semibold text-white"
+        >
+          Connect
+        </button>
 
         <div className={htw.text.info}>
           By selecting &ldquo;Connect&rdquo; you agree to the{' '}

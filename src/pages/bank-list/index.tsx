@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useRouter } from 'next/router';
 import React from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import { Header, Input } from '@/components';
 import allBanks from '@/data/banks';
 
-interface Props {
-  navigation: any;
-  route?: any;
-}
+const BankListScreen: React.FC = () => {
+  const router = useRouter();
 
-const BankListScreen: React.FC<Props> = ({ navigation }) => {
   const [state, setState] = React.useState({
     q: '',
     banks: [] as any,
@@ -47,8 +45,9 @@ const BankListScreen: React.FC<Props> = ({ navigation }) => {
             key={bank.id}
             className={`flex w-full flex-row items-center border-b border-[#E7E7E7] p-4`}
             onClick={() => {
-              navigation.navigate('BankLogin', {
-                bank,
+              router.push({
+                pathname: '/bank-login',
+                query: { data: JSON.stringify(bank) },
               });
             }}
           >
