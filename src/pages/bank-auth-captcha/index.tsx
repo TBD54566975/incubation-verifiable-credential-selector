@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { MdCheckCircle } from 'react-icons/md';
+import { MdCheck } from 'react-icons/md';
 
 import { Header, Input } from '@/components';
 import captchaImages from '@/data/captcha-images';
@@ -49,12 +49,12 @@ const BankAuthCaptchaScreen: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid">
+            <div className="grid grid-cols-3 gap-2">
               {captchaImages.map((item: any) => {
                 return (
                   <button
                     key={item.id}
-                    className={`aspect-square w-1/3 ${
+                    className={`relative aspect-square w-full ${
                       captcha.selectedImages.includes(item.id) ? 'p-3' : ''
                     }`}
                     onClick={() => {
@@ -78,7 +78,7 @@ const BankAuthCaptchaScreen: React.FC = () => {
                     />
                     {captcha.selectedImages.includes(item.id) && (
                       <div className="absolute top-1 left-1 rounded-full bg-[#468EE5] p-1">
-                        <MdCheckCircle name="check" size={20} color="white" />
+                        <MdCheck name="check" size={20} color="white" />
                       </div>
                     )}
                   </button>
