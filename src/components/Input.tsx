@@ -1,16 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react'
-import { TextInput, Keyboard, View, Platform } from 'react-native'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+/* eslint-disable no-nested-ternary */
+import React from 'react';
 
 interface Props {
-  value: any
-  placeholder?: string
-  onChange: any
-  icon?: any
-  isPassword?: boolean
-  isError?: boolean
-  className?: string
+  value: any;
+  placeholder?: string;
+  onChange: any;
+  icon?: any;
+  isPassword?: boolean;
+  isError?: boolean;
+  className?: string;
 }
 
 const Input: React.FC<Props> = ({
@@ -24,65 +22,45 @@ const Input: React.FC<Props> = ({
 }) => {
   const [state, setState] = React.useState({
     isFocusOnTextInput: false,
-  })
+  });
 
-  const { isFocusOnTextInput } = state
+  const { isFocusOnTextInput } = state;
 
-  const inputRef: any = React.createRef()
+  const inputRef: any = React.createRef();
   const focusText = () => {
-    inputRef.current.focus()
-  }
+    inputRef.current.focus();
+  };
 
   return (
-    <TouchableWithoutFeedback
+    <button
       className={`${
         isError
-          ? 'bg-[#F156520D] border-[#F15652]'
+          ? 'border-[#F15652] bg-[#F156520D]'
           : isFocusOnTextInput
-          ? 'bg-[#F3FBFF] border-[#0C95DF]'
-          : 'bg-[#FAFAFA] border-[#BBBBBB]'
-      }
-      ${Platform.OS === 'ios' ? 'py-4 px-5' : 'py-1 px-4'}
-       border flex flex-row items-center rounded-xl mb-5
-       ${className}
-       `}
-      onPress={() => focusText()}
+          ? 'border-[#0C95DF] bg-[#F3FBFF]'
+          : 'border-[#BBBBBB] bg-[#FAFAFA]'
+      } mb-5 flex flex-row items-center rounded-xl border py-4 px-5 ${className} `}
+      onClick={() => focusText()}
     >
-      {icon ? (
-        <View
-          className={`${
-            Platform.OS === 'ios' ? 'mr-4' : 'mr-2'
-          } w-5 items-center`}
-        >
-          {icon}
-        </View>
-      ) : null}
-      <TextInput
-        className="font-sans text-base leading-5 text-black"
-        placeholderTextColor="#01293B80"
+      {icon ? <div className={`mr-4 w-5 items-center`}>{icon}</div> : null}
+      <input
+        type={isPassword ? 'password' : 'text'}
+        className="w-full bg-transparent font-sans text-base leading-5 text-black placeholder:text-[#01293B80] focus:outline-none"
         placeholder={placeholder || ''}
         value={value}
-        onChangeText={text => onChange(text)}
+        onChange={(text: any) => onChange(text)}
         autoCapitalize={'none'}
-        autoCorrect={false}
         autoComplete={'off'}
         onFocus={() => {
-          setState({ ...state, isFocusOnTextInput: true })
+          setState({ ...state, isFocusOnTextInput: true });
         }}
         onBlur={() => {
-          setState({ ...state, isFocusOnTextInput: false })
-          Keyboard.dismiss
+          setState({ ...state, isFocusOnTextInput: false });
         }}
         ref={inputRef}
-        returnKeyType="done"
-        onSubmitEditing={() => {
-          Keyboard.dismiss
-        }}
-        secureTextEntry={isPassword ? true : false}
-        style={{ width: '100%' }}
       />
-    </TouchableWithoutFeedback>
-  )
-}
+    </button>
+  );
+};
 
-export default Input
+export default Input;
