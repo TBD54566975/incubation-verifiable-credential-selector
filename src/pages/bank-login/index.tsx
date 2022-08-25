@@ -4,13 +4,12 @@ import { IoIosLock } from 'react-icons/io';
 import { IoPersonCircle, IoShieldCheckmarkOutline } from 'react-icons/io5';
 
 import { Header, Input } from '@/components';
-import allBanks from '@/data/banks';
-import { htw } from '@/utils/Helper';
+import { getBankData, htw } from '@/utils/Helper';
 
 const BankLoginScreen: React.FC = () => {
   const router = useRouter();
   const { bankId } = router.query;
-  const bank = allBanks.find((item) => item.id.toString() === bankId);
+  const bank = getBankData(bankId);
 
   const [state, setState] = React.useState({
     email: '',
@@ -36,12 +35,12 @@ const BankLoginScreen: React.FC = () => {
       if (bank?.isError) {
         router.push({
           pathname: '/bank-error',
-          query: { data: JSON.stringify(bank) },
+          query: { bankId: bank?.id },
         });
       } else {
         router.push({
           pathname: '/bank-auth-captcha',
-          query: { data: JSON.stringify(bank) },
+          query: { bankId: bank?.id },
         });
       }
     } else {

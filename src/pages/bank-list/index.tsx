@@ -47,7 +47,7 @@ const BankListScreen: React.FC = () => {
             onClick={() => {
               router.push({
                 pathname: '/bank-login',
-                query: { bankId: bank.id },
+                query: { bankId: bank?.id },
               });
             }}
           >
