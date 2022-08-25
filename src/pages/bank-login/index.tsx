@@ -61,8 +61,8 @@ const BankLoginScreen: React.FC = () => {
 
       <div className="flex grow flex-col items-center justify-start px-5">
         <div className={`${htw.text.title} font-normal`}>
-          Login to <div className="font-bold">{bank?.name}</div>
-          {'\n'}
+          Login to <span className="font-bold">{bank?.name}</span>
+          <br />
           Enter your credentials
         </div>
 
@@ -134,7 +134,7 @@ const BankLoginScreen: React.FC = () => {
           </div>
         </button>
 
-        <div className="flex flex-row">
+        <div className="mb-2 flex flex-row">
           <div className="pt-2 pr-3">
             <IoShieldCheckmarkOutline size={22} color="#7B8698" />
           </div>
