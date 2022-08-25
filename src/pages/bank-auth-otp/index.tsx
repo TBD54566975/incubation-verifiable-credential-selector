@@ -2,10 +2,40 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FiPhone } from 'react-icons/fi';
+import OtpInput from 'react-otp-input';
 
-// import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { Header } from '@/components';
 import { getBankData, htw } from '@/utils/Helper';
+
+const styles = {
+  borderStyleBase: {
+    width: 60,
+    height: 60,
+    borderColor: '#BBBBBB',
+    backgroundColor: '#FAFAFA',
+    color: '#000000',
+    fontFamily: 'Space Mono',
+    fontWeight: 'bold',
+    fontSize: 24,
+    borderRadius: 8,
+    borderWidth: 0.5,
+  },
+
+  borderStyleHighLighted: {
+    borderColor: '#0C95DF',
+  },
+
+  underlineStyleBase: {
+    width: 30,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+  },
+
+  underlineStyleHighLighted: {
+    borderColor: '#03DAC6',
+  },
+};
 
 const BankAuthOTPScreen: React.FC = () => {
   const router = useRouter();
@@ -95,20 +125,16 @@ const BankAuthOTPScreen: React.FC = () => {
           </div>
         ) : (
           <div className="mt-5 flex flex-row items-center">
-            {/* <OTPInputView
-              style={{ width: '80%', height: 60 }}
-              pinCount={4}
-              code={otp}
-              onCodeChanged={(text: string) => {
-                setState({ ...state, otp: text })
+            <OtpInput
+              value={otp}
+              onChange={(text: string) => {
+                setState({ ...state, otp: text });
               }}
-              autoFocusOnLoad={false}
-              codeInputFieldStyle={styles.borderStyleBase}
-              codeInputHighlightStyle={styles.borderStyleHighLighted}
-              onCodeFilled={code => {
-                console.log(`Code is ${code}, you are good to go!`)
-              }}
-            /> */}
+              numInputs={4}
+              separator={<span className="w-4" />}
+              inputStyle={styles.borderStyleBase}
+              focusStyle={styles.borderStyleHighLighted}
+            />
           </div>
         )}
       </div>
@@ -134,34 +160,5 @@ const BankAuthOTPScreen: React.FC = () => {
     </div>
   );
 };
-
-// const styles = StyleSheet.create({
-//   borderStyleBase: {
-//     width: 60,
-//     height: 60,
-//     borderColor: '#BBBBBB',
-//     backgroundColor: '#FAFAFA',
-//     color: '#000000',
-//     fontFamily: 'SpaceMono-Bold',
-//     fontSize: 24,
-//     borderRadius: 8,
-//     borderWidth: 0.5,
-//   },
-
-//   borderStyleHighLighted: {
-//     borderColor: '#0C95DF',
-//   },
-
-//   underlineStyleBase: {
-//     width: 30,
-//     height: 45,
-//     borderWidth: 0,
-//     borderBottomWidth: 1,
-//   },
-
-//   underlineStyleHighLighted: {
-//     borderColor: '#03DAC6',
-//   },
-// });
 
 export default BankAuthOTPScreen;
