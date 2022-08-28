@@ -53,6 +53,6 @@ const banks = [
       'https://derrint.sirv.com/Images/sophtron/dummies/captcha-image-9.png',
     isBicycle: true,
   },
-]
+];
 
-export default banks
+export default banks;
