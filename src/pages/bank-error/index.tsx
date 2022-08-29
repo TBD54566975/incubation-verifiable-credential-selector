@@ -16,7 +16,7 @@ const BankErrorScreen: React.FC = () => {
       <div className="flex grow flex-col items-center justify-center px-5">
         <img
           src="https://derrint.sirv.com/Images/sophtron/illustration-bank-error.png"
-          className="mx-auto mb-10 aspect-square w-[70%]"
+          className="mx-auto mb-10 aspect-auto w-[70%]"
           alt=""
         />
         <div className={`${htw.text.title}`}>Something went wrong</div>

@@ -55,7 +55,9 @@ const BankAuthCaptchaScreen: React.FC = () => {
                   <button
                     key={item.id}
                     className={`relative aspect-square w-full ${
-                      captcha.selectedImages.includes(item.id) ? 'p-3' : ''
+                      captcha.selectedImages.includes(item.id)
+                        ? 'after:absolute after:top-0 after:left-0 after:h-full after:w-full after:border-8 after:border-white'
+                        : ''
                     }`}
                     onClick={() => {
                       let si = [...captcha.selectedImages];
@@ -77,7 +79,7 @@ const BankAuthCaptchaScreen: React.FC = () => {
                       alt=""
                     />
                     {captcha.selectedImages.includes(item.id) && (
-                      <div className="absolute top-1 left-1 rounded-full bg-[#468EE5] p-1">
+                      <div className="absolute top-1 left-1 z-10 rounded-full bg-[#468EE5] p-1">
                         <MdCheck name="check" size={20} color="white" />
                       </div>
                     )}

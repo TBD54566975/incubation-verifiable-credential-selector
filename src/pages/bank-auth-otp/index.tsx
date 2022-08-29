@@ -94,7 +94,7 @@ const BankAuthOTPScreen: React.FC = () => {
 
         <img
           src="https://derrint.sirv.com/Images/sophtron/illustration-otp.png"
-          className="mx-auto aspect-square w-[70%]"
+          className="mx-auto aspect-auto w-[70%]"
           alt=""
         />
 
@@ -134,6 +134,7 @@ const BankAuthOTPScreen: React.FC = () => {
               separator={<span className="w-4" />}
               inputStyle={styles.borderStyleBase}
               focusStyle={styles.borderStyleHighLighted}
+              isInputNum={true}
             />
           </div>
         )}
