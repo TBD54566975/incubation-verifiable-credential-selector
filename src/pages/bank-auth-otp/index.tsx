@@ -149,9 +149,9 @@ const BankAuthOTPScreen: React.FC = () => {
       <div className="mb-2 w-full px-5">
         <button
           onClick={onSubmitHandler}
-          disabled={isSent && otp.length !== 4}
+          disabled={isSent && otp.length === 0}
           className={`${
-            isSent && otp.length !== 4 ? 'bg-[#B2C6D1]' : 'bg-primary'
+            isSent && otp.length === 0 ? 'bg-[#B2C6D1]' : 'bg-primary'
           }  mb-5 w-full rounded-full py-[18px]`}
         >
           <div className="text-center font-sans text-lg font-semibold text-white">
