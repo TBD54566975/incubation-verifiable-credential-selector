@@ -2,40 +2,40 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FiPhone } from 'react-icons/fi';
-import OtpInput from 'react-otp-input';
 
-import { Header } from '@/components';
+// import OtpInput from 'react-otp-input';
+import { Header, Input } from '@/components';
 import { getBankData, htw } from '@/utils/Helper';
 
-const styles = {
-  borderStyleBase: {
-    width: 60,
-    height: 60,
-    borderColor: '#BBBBBB',
-    backgroundColor: '#FAFAFA',
-    color: '#000000',
-    fontFamily: 'Space Mono',
-    fontWeight: 'bold',
-    fontSize: 24,
-    borderRadius: 8,
-    borderWidth: 0.5,
-  },
+// const styles = {
+//   borderStyleBase: {
+//     width: 60,
+//     height: 60,
+//     borderColor: '#BBBBBB',
+//     backgroundColor: '#FAFAFA',
+//     color: '#000000',
+//     fontFamily: 'Space Mono',
+//     fontWeight: 'bold',
+//     fontSize: 24,
+//     borderRadius: 8,
+//     borderWidth: 0.5,
+//   },
 
-  borderStyleHighLighted: {
-    borderColor: '#0C95DF',
-  },
+//   borderStyleHighLighted: {
+//     borderColor: '#0C95DF',
+//   },
 
-  underlineStyleBase: {
-    width: 30,
-    height: 45,
-    borderWidth: 0,
-    borderBottomWidth: 1,
-  },
+//   underlineStyleBase: {
+//     width: 30,
+//     height: 45,
+//     borderWidth: 0,
+//     borderBottomWidth: 1,
+//   },
 
-  underlineStyleHighLighted: {
-    borderColor: '#03DAC6',
-  },
-};
+//   underlineStyleHighLighted: {
+//     borderColor: '#03DAC6',
+//   },
+// };
 
 const BankAuthOTPScreen: React.FC = () => {
   const router = useRouter();
@@ -125,7 +125,7 @@ const BankAuthOTPScreen: React.FC = () => {
           </div>
         ) : (
           <div className="mt-5 flex flex-row items-center">
-            <OtpInput
+            {/* <OtpInput
               value={otp}
               onChange={(text: string) => {
                 setState({ ...state, otp: text });
@@ -135,6 +135,12 @@ const BankAuthOTPScreen: React.FC = () => {
               inputStyle={styles.borderStyleBase}
               focusStyle={styles.borderStyleHighLighted}
               isInputNum={true}
+            /> */}
+            <Input
+              placeholder=""
+              onChange={(text: string) => {
+                setState({ ...state, otp: text });
+              }}
             />
           </div>
         )}
