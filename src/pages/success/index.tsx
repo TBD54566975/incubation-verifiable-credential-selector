@@ -12,7 +12,7 @@ const SuccessScreen: React.FC = () => {
       <div className="flex grow flex-col items-center justify-center px-5">
         <Player
           autoplay
-          loop
+          keepLastFrame
           speed={1.5}
           src="https://derrint.sirv.com/Images/sophtron/lotties/lottie-success.json"
           className="h-64"
