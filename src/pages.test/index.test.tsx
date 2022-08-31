@@ -11,7 +11,7 @@ describe('Index page', () => {
       render(<Index />);
 
       const heading = screen.getByRole('heading', {
-        name: /Boilerplate code/,
+        name: /Connect Your Account/,
       });
 
       expect(heading).toBeInTheDocument();

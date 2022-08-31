@@ -23,7 +23,7 @@ const HomeScreen: React.FC = () => {
           alt=""
         />
 
-        <div className={htw.text.title}>Connect Your Account</div>
+        <h1 className={htw.text.title}>Connect Your Account</h1>
 
         <div className={htw.text.description}>
           Sophtron lets you securely connect your financial accounts in seconds
