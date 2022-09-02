@@ -91,7 +91,7 @@ const BankAuthCaptchaScreen: React.FC = () => {
         </div>
       ) : (
         <div className="flex grow flex-col items-center justify-start px-5">
-          <div className={`${htw.text.title} font-normal`}>Enter Captcha</div>
+          <div className={`${htw.text.title}`}>Enter Captcha</div>
 
           <div className={htw.text.description}>
             Please enter the code you see in picture below

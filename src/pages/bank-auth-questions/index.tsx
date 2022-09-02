@@ -28,9 +28,7 @@ const BankAuthQuestionsScreen: React.FC = () => {
       <Header image={bank?.image} />
 
       <div className="flex grow flex-col items-center justify-start px-5">
-        <div className={`${htw.text.title} font-normal`}>
-          Authentication Questions
-        </div>
+        <div className={`${htw.text.title}`}>Authentication Questions</div>
 
         <div className="mt-5 w-full">
           <div className="mb-2 font-sans text-base leading-7 text-secondary">
