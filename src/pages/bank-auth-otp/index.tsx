@@ -2,6 +2,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FiPhone } from 'react-icons/fi';
+import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
 
 // import OtpInput from 'react-otp-input';
 import { Header, Input } from '@/components';
@@ -43,12 +44,18 @@ const BankAuthOTPScreen: React.FC = () => {
   const bank = getBankData(bankId);
 
   const defaultText = {
-    info: 'We will send OTP code to verify your identity.',
+    info: 'Where would you like to send your security code?',
     button: 'Send OTP Number',
   };
 
   const [state, setState] = React.useState({
-    phoneNumber: '+1 **** *** 2134',
+    phoneNumber: '',
+    phoneNumbers: [
+      '+1 **** *** 2134',
+      '+1 **** *** 5678',
+      '+1 **** *** 9090',
+      '+1 **** *** 8818',
+    ],
     isSent: false,
     isSubmitted: false,
     textInfo: defaultText.info,
@@ -56,7 +63,15 @@ const BankAuthOTPScreen: React.FC = () => {
     otp: '',
   });
 
-  const { phoneNumber, isSent, isSubmitted, textInfo, textButton, otp } = state;
+  const {
+    phoneNumber,
+    phoneNumbers,
+    isSent,
+    isSubmitted,
+    textInfo,
+    textButton,
+    otp,
+  } = state;
 
   const onSubmitHandler = () => {
     if (!isSent) {
@@ -90,13 +105,17 @@ const BankAuthOTPScreen: React.FC = () => {
       <Header image={bank?.image} />
 
       <div className="flex grow flex-col items-center justify-start px-5">
-        <div className={`${htw.text.title} font-normal`}>OTP Verification</div>
+        <div className={`${htw.text.title}`}>
+          {!isSent ? 'Verify Your Identity' : 'OTP Verification'}
+        </div>
 
-        <img
-          src="https://derrint.sirv.com/Images/sophtron/illustration-otp.png"
-          className="mx-auto aspect-auto w-[70%]"
-          alt=""
-        />
+        {isSent && (
+          <img
+            src="https://derrint.sirv.com/Images/sophtron/illustration-otp.png"
+            className="mx-auto aspect-auto w-[70%]"
+            alt=""
+          />
+        )}
 
         <div className={`${htw.text.description}`}>{textInfo}</div>
         {isSent && (
@@ -106,22 +125,53 @@ const BankAuthOTPScreen: React.FC = () => {
         )}
 
         {!isSent ? (
-          <div className="mt-5 flex flex-row items-center">
-            <div className="aspect-square w-10 items-center justify-center rounded-full bg-primary/60 p-2">
-              <FiPhone size={22} color="white" />
-            </div>
-            <div className="ml-3">
-              <div
-                className={
-                  'mb-1 px-0 text-left font-sans text-sm text-secondary'
-                }
-              >
-                Phone Number
-              </div>
-              <div className={'shrink px-0 font-sans text-base font-bold'}>
-                {phoneNumber}
-              </div>
-            </div>
+          <div className="w-full">
+            {phoneNumbers.map((pn, idx) => {
+              const isChecked = pn === phoneNumber;
+              const color = isChecked ? '#71D14E' : '#FAFAFA';
+              const borderColor = isChecked
+                ? 'border-[#71D14E]'
+                : 'border-[#BBBBBB]';
+
+              return (
+                <button
+                  key={idx}
+                  className="mt-5 flex w-full flex-row items-center justify-between border-b pb-5"
+                  onClick={() => {
+                    setState({ ...state, phoneNumber: pn });
+                  }}
+                >
+                  <div className="flex flex-row items-center">
+                    <div className="aspect-square w-10 items-center justify-center rounded-full bg-primary/60 p-2">
+                      <FiPhone size={22} color="white" />
+                    </div>
+                    <div className="ml-3">
+                      <div
+                        className={
+                          'mb-1 px-0 text-left font-sans text-sm text-secondary'
+                        }
+                      >
+                        Phone Number
+                      </div>
+                      <div
+                        className={'shrink px-0 font-sans text-base font-bold'}
+                      >
+                        {pn}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`rounded-full border ${borderColor} bg-[#FAFAFA] p-[2px]`}
+                  >
+                    <RiCheckboxBlankCircleFill
+                      name="check"
+                      size={20}
+                      color={color}
+                    />
+                  </div>
+                </button>
+              );
+            })}
           </div>
         ) : (
           <div className="mt-5 flex flex-row items-center">
@@ -149,9 +199,11 @@ const BankAuthOTPScreen: React.FC = () => {
       <div className="mb-2 w-full px-5">
         <button
           onClick={onSubmitHandler}
-          disabled={isSent && otp.length === 0}
+          disabled={phoneNumber === '' || (isSent && otp.length === 0)}
           className={`${
-            isSent && otp.length === 0 ? 'bg-[#B2C6D1]' : 'bg-primary'
+            phoneNumber === '' || (isSent && otp.length === 0)
+              ? 'bg-[#B2C6D1]'
+              : 'bg-primary'
           }  mb-5 w-full rounded-full py-[18px]`}
         >
           <div className="text-center font-sans text-lg font-semibold text-white">
