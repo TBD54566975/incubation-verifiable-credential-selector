@@ -1,27 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
+// import allBanks from '@/data/banks';
 import { AiOutlineSearch } from 'react-icons/ai';
+import type { Institution } from 'shared/contract';
 
+import { useAppDispatch, useAppSelector } from '@/client/app/hooks';
+import {
+  loadInstitutionsAsync,
+  selectInstitutionAsync,
+} from '@/client/features/institutions';
 import { Header, Input } from '@/components';
-import allBanks from '@/data/banks';
 
 const BankListScreen: React.FC = () => {
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { institutions = [] } = useAppSelector(
+    (state) => state.instituion.institution_list || { institutions: [] }
+  );
 
-  const [state, setState] = React.useState({
-    q: '',
-    banks: [] as any,
-  });
-
-  const { q, banks } = state;
-
-  React.useEffect(() => {
-    const banksFiltered = allBanks.filter((keyword) =>
-      keyword.name.toLowerCase().includes(q)
-    );
-    setState({ ...state, banks: banksFiltered });
-  }, [q]);
+  useEffect(() => {
+    if (institutions.length === 0) {
+      dispatch(loadInstitutionsAsync());
+    }
+  }, []);
 
   return (
     <div className="h-full justify-between bg-white">
@@ -35,25 +35,24 @@ const BankListScreen: React.FC = () => {
         <Input
           placeholder="Search Bank"
           onChange={(text: string) => {
-            setState({ ...state, q: text });
+            if (text && text.length >= 3) {
+              dispatch(loadInstitutionsAsync(text));
+            }
           }}
           icon={<AiOutlineSearch size={20} color="#222222" />}
         />
 
-        {banks.map((bank: any) => (
+        {(institutions || []).map((bank: Institution) => (
           <button
             key={bank.id}
             className={`flex w-full flex-row items-center border-b border-[#E7E7E7] p-4`}
             onClick={() => {
-              router.push({
-                pathname: '/bank-login',
-                query: { bankId: bank?.id },
-              });
+              dispatch(selectInstitutionAsync(bank.id!));
             }}
           >
             <div className="w-4/12">
               <img
-                src={bank.image}
+                src={bank.logo_url!}
                 className="h-10 w-auto object-contain"
                 alt=""
               />
@@ -65,7 +64,7 @@ const BankListScreen: React.FC = () => {
             </div>
           </button>
         ))}
-        {banks.length === 0 && (
+        {institutions.length === 0 && (
           <div className="my-16 items-center">
             <img
               src="https://derrint.sirv.com/Images/sophtron/illustration-not-found.png"

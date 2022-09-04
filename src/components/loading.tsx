@@ -1,30 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Player } from '@lottiefiles/react-lottie-player';
-import { useRouter } from 'next/router';
 import React from 'react';
 
+import { useAppSelector } from '@/client/app/hooks';
 import { Header } from '@/components';
-import { getBankData, htw } from '@/utils/Helper';
+import { htw } from '@/utils/Helper';
 
 const LoadingScreen: React.FC = () => {
-  const router = useRouter();
-  const { bankId } = router.query;
-  const bank = getBankData(bankId);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      router.push({
-        pathname: '/success',
-        query: { bankId: bank?.id },
-      });
-    }, 5000);
-
-    return () => {};
-  }, []);
-
+  const { selected_institution } = useAppSelector((state) => state.instituion);
   return (
     <div className="flex h-screen flex-col justify-between bg-white">
-      <Header image={bank?.image} isBackButtonVisible={false} />
+      <Header
+        image={selected_institution?.logo_url!}
+        isBackButtonVisible={false}
+      />
 
       <div className="flex grow flex-col items-center justify-center px-5">
         <Player
@@ -37,9 +26,7 @@ const LoadingScreen: React.FC = () => {
       </div>
 
       <div className="mb-2 w-full px-5">
-        <div className={`${htw.text.info} text-primary`}>
-          Verifying OTP Code ...
-        </div>
+        <div className={`${htw.text.info} text-primary`}>Connecting ...</div>
       </div>
     </div>
   );

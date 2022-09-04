@@ -39,7 +39,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"]
-    }
+    },
+    "typeRoots": ["node_modules/@types", "shared/types"]
   },
   "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.cy.ts"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
