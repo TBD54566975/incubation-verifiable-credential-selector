@@ -8,7 +8,6 @@
     "build-stats": "cross-env ANALYZE=true npm run build",
     "export": "next export",
     "build-client": "run-s clean build export",
-    "build-server": "tsc -p ./server/tsconfig.json",
     "clean": "rimraf .next out",
     "lint": "next lint",
     "check-types": "tsc --noEmit --pretty",
