@@ -64,6 +64,7 @@ export interface Institution {
   id: string | null;
   name: string;
   url: string;
+  provider?: string | null;
   logo_url: string | null;
   code?: string | null;
   instructional_text?: string | null;
@@ -118,6 +119,17 @@ export interface Pagination {
   per_page?: number;
   total_entries?: number;
   total_pages?: number;
+}
+
+export enum EventEnum {
+  INIT,
+  INSTITUTION_LIST,
+  SELECT_INSTITUTION,
+  LOGIN,
+  CHALLENGED,
+  SUCCEEDED,
+  FAILED,
+  ERROR,
 }
 
 export interface ProviderApiClient {

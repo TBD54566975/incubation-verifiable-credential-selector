@@ -1,0 +1,52 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EventEnum = exports.JobType = exports.ChallengeType = exports.ConnectionStatus = void 0;
+var ConnectionStatus;
+(function (ConnectionStatus) {
+    ConnectionStatus[ConnectionStatus["CREATED"] = 0] = "CREATED";
+    ConnectionStatus[ConnectionStatus["PREVENTED"] = 1] = "PREVENTED";
+    ConnectionStatus[ConnectionStatus["DENIED"] = 2] = "DENIED";
+    ConnectionStatus[ConnectionStatus["CHALLENGED"] = 3] = "CHALLENGED";
+    ConnectionStatus[ConnectionStatus["REJECTED"] = 4] = "REJECTED";
+    ConnectionStatus[ConnectionStatus["LOCKED"] = 5] = "LOCKED";
+    ConnectionStatus[ConnectionStatus["CONNECTED"] = 6] = "CONNECTED";
+    ConnectionStatus[ConnectionStatus["IMPEDED"] = 7] = "IMPEDED";
+    ConnectionStatus[ConnectionStatus["RECONNECTED"] = 8] = "RECONNECTED";
+    ConnectionStatus[ConnectionStatus["DEGRADED"] = 9] = "DEGRADED";
+    ConnectionStatus[ConnectionStatus["DISCONNECTED"] = 10] = "DISCONNECTED";
+    ConnectionStatus[ConnectionStatus["DISCONTINUE"] = 11] = "DISCONTINUE";
+    ConnectionStatus[ConnectionStatus["CLOSED"] = 12] = "CLOSED";
+    ConnectionStatus[ConnectionStatus["DELAYED"] = 13] = "DELAYED";
+    ConnectionStatus[ConnectionStatus["FAILED"] = 14] = "FAILED";
+    ConnectionStatus[ConnectionStatus["UPDATED"] = 15] = "UPDATED";
+    ConnectionStatus[ConnectionStatus["DISABLED"] = 16] = "DISABLED";
+    ConnectionStatus[ConnectionStatus["IMPORTED"] = 17] = "IMPORTED";
+    ConnectionStatus[ConnectionStatus["RESUMED"] = 18] = "RESUMED";
+    ConnectionStatus[ConnectionStatus["EXPIRED"] = 19] = "EXPIRED";
+    ConnectionStatus[ConnectionStatus["IMPAIRED"] = 20] = "IMPAIRED";
+    ConnectionStatus[ConnectionStatus["PENDING"] = 21] = "PENDING";
+})(ConnectionStatus = exports.ConnectionStatus || (exports.ConnectionStatus = {}));
+var ChallengeType;
+(function (ChallengeType) {
+    ChallengeType[ChallengeType["QUESTION"] = 0] = "QUESTION";
+    ChallengeType[ChallengeType["OPTIONS"] = 1] = "OPTIONS";
+    ChallengeType[ChallengeType["IMAGE"] = 2] = "IMAGE";
+    ChallengeType[ChallengeType["IMAGE_OPTIONS"] = 3] = "IMAGE_OPTIONS";
+    ChallengeType[ChallengeType["TOKEN"] = 4] = "TOKEN";
+})(ChallengeType = exports.ChallengeType || (exports.ChallengeType = {}));
+var JobType;
+(function (JobType) {
+    JobType["AGG"] = "aggregation";
+    JobType["AUTH"] = "auth";
+})(JobType = exports.JobType || (exports.JobType = {}));
+var EventEnum;
+(function (EventEnum) {
+    EventEnum[EventEnum["INIT"] = 0] = "INIT";
+    EventEnum[EventEnum["INSTITUTION_LIST"] = 1] = "INSTITUTION_LIST";
+    EventEnum[EventEnum["SELECT_INSTITUTION"] = 2] = "SELECT_INSTITUTION";
+    EventEnum[EventEnum["LOGIN"] = 3] = "LOGIN";
+    EventEnum[EventEnum["CHALLENGED"] = 4] = "CHALLENGED";
+    EventEnum[EventEnum["SUCCEEDED"] = 5] = "SUCCEEDED";
+    EventEnum[EventEnum["FAILED"] = 6] = "FAILED";
+    EventEnum[EventEnum["ERROR"] = 7] = "ERROR";
+})(EventEnum = exports.EventEnum || (exports.EventEnum = {}));

@@ -7,7 +7,11 @@
   ],
   "rules": {
     "no-plusplus": "off",
+    "indent": "off",
+    "@typescript-eslint/indent": ["error", 2],
     "no-param-reassign": "off",
+    "max-len": "off",
+    "no-nested-ternary": "off",
     "prettier/prettier": [
       "error",
       {
@@ -16,6 +20,7 @@
       }
     ]
   },
+  "ignorePatterns": ["./server/**"],
   "overrides": [
     // Configuration for TypeScript files
     {
@@ -33,7 +38,7 @@
         "plugin:prettier/recommended"
       ],
       "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": ["./tsconfig.json", "./server/tsconfig.json"]
       },
       "rules": {
         "no-plusplus": "off",

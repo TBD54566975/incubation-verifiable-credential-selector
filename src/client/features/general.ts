@@ -35,6 +35,7 @@ export const generalSlice = createSlice({
   name: 'general',
   initialState: <any>{
     processing: false,
+    error: null,
   },
   reducers: {
     resetLoadingStatus: () => ({ processing: false }),
@@ -49,9 +50,11 @@ export const generalSlice = createSlice({
     });
     builder.addMatcher(isRejectedAction, (state, action) => {
       state.processing = false;
+      state.error = action.error || action.payload;
       if (action?.meta?.requestId) {
         state[action.meta.requestId] = 'rejected';
       }
+      console.log(`rejected: ${action.type}`);
     });
     builder.addMatcher(isFulfilledAction, (state, action) => {
       state.processing = false;

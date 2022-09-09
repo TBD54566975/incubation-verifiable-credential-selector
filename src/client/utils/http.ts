@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import broker from './broker';
+import { postMessage } from './broker';
 import mockData from './mockData';
 
 const prefix = '';
 let meta = ''; // a temporary metadata token for this session
 
 axios.interceptors.response.use(undefined, function (err) {
-  broker.postMessage({ error: (err.response || {}).status });
+  postMessage({ error: (err.response || {}).status });
   return Promise.reject(err);
 });
 

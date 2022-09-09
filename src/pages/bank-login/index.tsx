@@ -6,6 +6,7 @@ import type { Credential } from 'shared/contract';
 
 import { useAppDispatch, useAppSelector } from '@/client/app/hooks';
 import {
+  initAsync,
   loginAsync,
   selectInstitutionAsync,
 } from '@/client/features/institutions';
@@ -18,14 +19,28 @@ const BankLoginScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const credentials: Credential[] =
     useAppSelector((state) => state.instituion.credentials) || [];
-  const { selected_institution } = useAppSelector((state) => state.instituion!);
-
+  const { selected_institution, request } = useAppSelector(
+    (state) => state.instituion!
+  );
   useEffect(() => {
-    const { bankId } = router.query;
-    if (bankId && credentials.length === 0) {
-      dispatch(selectInstitutionAsync(bankId as string));
+    const { bankId, connection_id } = router.query;
+    if (!request || request.connection_id !== (connection_id as string)) {
+      dispatch(
+        initAsync({
+          query: router.query,
+          connection_id: (connection_id as string) || '',
+        })
+      );
     }
-  }, [router.query]);
+    if (request && bankId && credentials.length === 0) {
+      dispatch(
+        selectInstitutionAsync({
+          instituion: { id: bankId as string, name: '', logo_url: '', url: '' },
+          navigate: false,
+        })
+      );
+    }
+  }, [request, router.query]);
 
   const [state, setState] = React.useState({
     values: [] as string[],

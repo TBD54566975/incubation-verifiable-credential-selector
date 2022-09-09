@@ -2,13 +2,8 @@ const config = require('../../config');
 const http = require('../http');
 
 function post(path, data) {
-  const authHeader = http.buildAuthCode(
-    'post',
-    path,
-    config.SophtronApiUserId,
-    config.SophtronApiUserSecret
-  );
-  return http.post(config.ApiServiceEndpoint + path, data, null, {
+  const authHeader = http.buildAuthCode('post', path);
+  return http.post(config.ApiServiceEndpoint + path, data, {
     Authorization: authHeader,
   });
 }
@@ -38,6 +33,7 @@ module.exports = {
     });
   },
   async getInstitutionsByName(name) {
+    // console.log(name);
     if ((name || '').length > 0) {
       const data = await post('/Institution/GetInstitutionByName', {
         InstitutionName: name,

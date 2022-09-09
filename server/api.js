@@ -1,6 +1,10 @@
 const service = require('./serviceClients/services.ts');
 
 module.exports = {
+  context(req, res) {
+    res.context = req.body;
+    res.send(req.body);
+  },
   async search(req, res) {
     const { query } = req.body;
     if (query && query.length >= 3) {
@@ -11,17 +15,17 @@ module.exports = {
     }
   },
   async selectInstitution(req, res) {
-    const data = await service.selectInstitution(req.body.id, req.context);
+    const data = await service.selectInstitution(req.body, req.context);
     res.send(data);
   },
   async institutions(req, res) {
-    const data = await service.institutions(req.body);
-    res.context = data.meta;
+    const data = await service.institutions(req.context);
     res.send(data);
   },
   async login(req, res) {
     const data = await service.login(
-      req.body.id,
+      req.body.institution_id,
+      req.body.connection_id,
       req.body.credentials,
       req.context
     );

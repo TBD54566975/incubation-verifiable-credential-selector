@@ -1,4 +1,4 @@
-import type { InitialRequest } from '@/../shared/bff';
+import type { InitialRequest, WidgetError } from '@/../shared/bff';
 import type {
   Challenge,
   Connection,
@@ -10,18 +10,30 @@ import type {
 import http from '../utils/http';
 
 export default {
-  institutions: (request: InitialRequest) =>
-    http.post<Institutions>('/api/institutions', request),
+  context: (request: InitialRequest) =>
+    http.post<InitialRequest | WidgetError>('/api/context', request),
+  institutions: () =>
+    http.post<Institutions | WidgetError>('/api/institutions', ''),
   search: (term: string) =>
-    http.post<Institutions>('/api/search', { query: term }),
-  selectInstitution: (instituion_id: string) =>
-    http.post<{ institution: Institution; credentials: Array<Credential> }>(
-      '/api/selectInstitution',
-      { id: instituion_id }
-    ),
-  login: (credentials: Array<Credential>, bankId: string) =>
-    http.post<Connection>('/api/login', { credentials, id: bankId }),
-  mfa: (jobId: string) => http.post<Connection>('/api/mfa', { jobId }),
+    http.post<Institutions | WidgetError>('/api/search', { query: term }),
+  selectInstitution: (ins: Institution) =>
+    http.post<
+      { institution: Institution; credentials: Array<Credential> } | WidgetError
+    >('/api/selectInstitution', ins),
+  login: (
+    credentials: Array<Credential>,
+    bankId: string,
+    connection_id: string | undefined
+  ) =>
+    http.post<Connection | WidgetError>('/api/login', {
+      credentials,
+      institution_id: bankId.toLowerCase(),
+      connection_id,
+    }),
+  mfa: (jobId: string) =>
+    http.post<Connection | WidgetError>('/api/mfa', { job_id: jobId }),
   answerChallenge: (input: Array<Challenge>) =>
-    http.post<boolean>('/api/answerChallenge', { challenges: input }),
+    http.post<boolean | WidgetError>('/api/answerChallenge', {
+      challenges: input,
+    }),
 };

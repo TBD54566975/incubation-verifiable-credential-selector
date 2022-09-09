@@ -11,8 +11,12 @@ import type {
 import { ChallengeType, ConnectionStatus } from '@/../../shared/contract';
 
 import * as config from '../../config';
+import * as logger from '../../infra/logger';
 import * as http from '../http';
 import * as client from '../sophtronClient';
+
+const uuid =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
 function fromSophtronInstitution(ins: any): Institution {
   return {
@@ -20,6 +24,7 @@ function fromSophtronInstitution(ins: any): Institution {
     logo_url: ins.Logo,
     name: ins.InstitutionName,
     url: ins.URL,
+    provider: 'sophtron',
   };
 }
 
@@ -35,6 +40,7 @@ export class SophtronApi implements ProviderApiClient {
         name: 'Ally Bank',
         url: 'https://www.ally.com',
         logo_url: 'https://sophtron.com/images/banklogos/ally%20bank.png',
+        provider: 'sophtron',
       },
       {
         id: '3e9fbc88-be07-4478-9a4c-9d3061d5d6d4',
@@ -42,42 +48,49 @@ export class SophtronApi implements ProviderApiClient {
         url: 'https://connect.bnymellon.com/ConnectLogin/login/LoginPage.jsp',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/bank_of_america_logo.png',
+        provider: 'sophtron',
       },
       {
         id: '227d9de3-7c18-4781-97a0-ce2ecefb1b7a',
         name: 'Barclays',
         url: 'https://www.securebanking.barclaysus.com/',
         logo_url: 'https://sophtron.com/images/banklogos/barclays.png',
+        provider: 'sophtron',
       },
       {
         id: '7da0e182-a2f3-41f1-84e2-4b6f5b8112e5',
         name: 'BB&T',
         url: 'https://www.bbt.com/online-access/online-banking/default.page',
         logo_url: 'https://sophtron.com/images/banklogos/bbt.png',
+        provider: 'sophtron',
       },
       {
         id: '0d8a29dd-4c28-4364-a493-b508f0a84758',
         name: 'Capital One',
         url: 'https://www.capitalone.com/',
         logo_url: 'https://sophtron.com/images/banklogos/capital%20one.png',
+        provider: 'sophtron',
       },
       {
         id: '3d7671e4-36be-4266-971e-b50d33001382',
         name: 'Charles Schwab',
         url: 'https://client.schwab.com/Login/SignOn/CustomerCenterLogin.aspx',
         logo_url: 'https://sophtron.com/images/banklogos/charles%20schwab.png',
+        provider: 'sophtron',
       },
       {
         id: '4b2eca34-a729-438f-844c-ba8ce51047f9',
         name: 'Citibank',
         url: 'https://online.citi.com/US/login.do',
         logo_url: 'https://sophtron.com/images/banklogos/citibank.png ',
+        provider: 'sophtron',
       },
       {
         id: 'd06b4cb4-d11f-47cf-92bd-6d0fe52760b1',
         name: 'USAA',
         url: 'https://www.usaa.com/inet/ent_logon/Logon',
         logo_url: 'https://sophtron.com/images/banklogos/usaa.png',
+        provider: 'sophtron',
       },
       {
         id: '71ec5788-adf0-43a4-b1dd-8d5958a0d13c',
@@ -85,30 +98,35 @@ export class SophtronApi implements ProviderApiClient {
         url: 'http://www.53.com/content/fifth-third/en/login.html',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/fifth_third_bank_logo.png',
+        provider: 'sophtron',
       },
       {
         id: 'd03878fe-5b40-4b4d-95fc-c48d92105888',
         name: 'GoldMan Sachs',
         url: 'https://www.goldman.com/',
         logo_url: 'https://sophtron.com/images/banklogos/goldman%20sachs.png',
+        provider: 'sophtron',
       },
       {
         id: 'c155dab2-9133-4df3-a28e-b862af43bb38',
         name: 'HSBC Bank',
         url: 'https://www.services.online-banking.us.hsbc.com/',
         logo_url: 'https://sophtron.com/images/banklogos/hsbc%20bank.png',
+        provider: 'sophtron',
       },
       {
         id: 'b2a957e5-7bf2-47c0-bd63-ce96736cdacd',
         name: 'Chase Bank',
         url: 'https://www.chase.com/',
         logo_url: 'https://sophtron.com/images/banklogos/chase.png',
+        provider: 'sophtron',
       },
       {
         id: 'abd4059c-adf1-4f16-b493-37767f6cf233',
         name: 'Morgan Stanley',
         url: 'https://www.morganstanleyclientserv.com/',
         logo_url: 'https://sophtron.com/images/banklogos/morgan%20stanley.png',
+        provider: 'sophtron',
       },
       {
         id: '13793b9f-2ebf-4f31-815e-7dfe38e906c4',
@@ -116,12 +134,14 @@ export class SophtronApi implements ProviderApiClient {
         url: 'https://www.pnc.com/en/personal-banking/banking/online-and-mobile-banking.html',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/pnc_bank_logo.png',
+        provider: 'sophtron',
       },
       {
         id: '86e1f8a0-5963-4125-9999-ccbe44d5940e',
         name: 'State Street',
         url: 'https://www.statestreetbank.com/online-banking',
         logo_url: 'https://sophtron.com/images/banklogos/state%20street.png',
+        provider: 'sophtron',
       },
       {
         id: '8275fc09-149b-4849-8a31-51ef9ba8eb6d',
@@ -129,6 +149,7 @@ export class SophtronApi implements ProviderApiClient {
         url: 'https://onlinebanking.suntrust.com/',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/suntrust_logo.png',
+        provider: 'sophtron',
       },
       {
         id: 'b8cb06e4-4f42-42b7-ba5a-623a5d1afe0f',
@@ -136,6 +157,7 @@ export class SophtronApi implements ProviderApiClient {
         url: 'https://onlinebanking.tdbank.com',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/td_bank_logo.png',
+        provider: 'sophtron',
       },
       {
         id: '9aee59a1-59c9-4e5e-88f6-a00aa19f1612',
@@ -143,12 +165,14 @@ export class SophtronApi implements ProviderApiClient {
         url: 'https://www.usbank.com/index.html',
         logo_url:
           'https://logos-list.s3-us-west-2.amazonaws.com/us_bank_logo.png',
+        provider: 'sophtron',
       },
       {
         id: 'e3d4c866-1c48-44c3-9cc5-5e9c7db43ef0',
         name: 'Wells Fargo',
         url: 'https://connect.secure.wellsfargo.com/auth/login/present?origin=tpb',
         logo_url: 'https://sophtron.com/images/banklogos/wells%20fargo.png',
+        provider: 'sophtron',
       },
     ]);
   }
@@ -162,13 +186,14 @@ export class SophtronApi implements ProviderApiClient {
     const ret = await this.httpClient.wget(
       `${config.AutoSuggestEndpoint}?term=${name}`
     );
-    console.log(ret);
+    // console.log(ret);
     return {
       institutions: (ret || []).slice(0, 9).map((ins: any) => ({
         id: ins.label,
         logo_url: ins.img,
         name: ins.label,
         url: ins.url,
+        provider: 'sophtron',
       })),
     };
   }
@@ -195,7 +220,17 @@ export class SophtronApi implements ProviderApiClient {
     const password = request.credentials.find(
       (item) => item.id === 'password'
     )!.value;
-    const entityId = request.institution_id;
+    let entityId = request.institution_id;
+    if (!uuid.test(entityId)) {
+      const name = entityId;
+      const res = await this.apiClient.getInstitutionsByName(name);
+      if (res?.[0]) {
+        entityId = res[0].InstitutionID;
+        logger.info(`Loaded institution id ${entityId} by name ${name}`);
+      } else {
+        return undefined;
+      }
+    }
     let ret: { JobID: string; UserInstitutionID: string } | null = null;
     switch ((request.initial_job_type || '').toLowerCase()) {
       case 'agg':
@@ -308,10 +343,11 @@ export class SophtronApi implements ProviderApiClient {
           );
         } else if (job.TokenSentFlag === true) {
           challenge.type = ChallengeType.QUESTION;
+          challenge.question = 'ota';
           challenge.data = [
             {
               key: '0',
-              value: job.TokenInputName || 'Please enter the OTA code',
+              value: `Please Enter the ${job.TokenInputName || 'OTA code'}`,
             },
           ];
         } else if (job.TokenRead) {
@@ -343,7 +379,14 @@ export class SophtronApi implements ProviderApiClient {
     const c = request.challenges![0]!;
     switch (c.type) {
       case ChallengeType.TOKEN:
-        if (c.data === 'token') {
+        await this.apiClient.jobTokenInput(request.id, null, null, true);
+        break;
+      case ChallengeType.IMAGE:
+      case ChallengeType.IMAGE_OPTIONS:
+        await this.apiClient.jobCaptchaInput(request.id, c.response);
+        break;
+      case ChallengeType.QUESTION:
+        if (c.question === 'ota') {
           await this.apiClient.jobTokenInput(
             request.id,
             null,
@@ -351,15 +394,8 @@ export class SophtronApi implements ProviderApiClient {
             null
           );
         } else {
-          await this.apiClient.jobTokenInput(request.id, null, null, true);
+          await this.apiClient.jobSecurityAnswer(request.id, [c.response]);
         }
-        break;
-      case ChallengeType.IMAGE:
-      case ChallengeType.IMAGE_OPTIONS:
-        await this.apiClient.jobCaptchaInput(request.id, c.response);
-        break;
-      case ChallengeType.QUESTION:
-        await this.apiClient.jobSecurityAnswer(request.id, c.response);
         break;
       case ChallengeType.OPTIONS:
         await this.apiClient.jobTokenInput(request.id, c.response, null, null);

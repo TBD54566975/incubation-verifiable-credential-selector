@@ -6,10 +6,6 @@ import { htw } from '@/utils/Helper';
 import type { Props } from './props';
 
 const AuthImageOption: React.FC<Props> = ({ challenge, onValueChange }) => {
-  const captcha = {
-    question: challenge.question,
-    images: challenge.data as any[],
-  };
   const [state, setState] = React.useState({
     selectedImages: [] as any[],
   });
@@ -19,27 +15,27 @@ const AuthImageOption: React.FC<Props> = ({ challenge, onValueChange }) => {
       <div className="w-full border-2 border-[#D6D6D6] p-3">
         <div className="mb-3 bg-[#468EE5] px-7 py-9">
           <div className="text-lg font-medium text-white">
-            {captcha.question}
+            {challenge.question}
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-2">
-          {captcha.images.map((item: any) => {
+          {(challenge.data as any[]).map((item: any, index) => {
             return (
               <button
-                key={item.id}
+                key={item.key || index}
                 className={`relative aspect-square w-full ${
-                  state.selectedImages.includes(item.id)
+                  state.selectedImages.includes(item.key)
                     ? 'after:absolute after:top-0 after:left-0 after:h-full after:w-full after:border-8 after:border-white'
                     : ''
                 }`}
                 onClick={() => {
                   let si = [...state.selectedImages];
 
-                  if (si.length > 0 && si.includes(item.id)) {
-                    si = si.filter((x: any) => x !== item.id);
+                  if (si.length > 0 && si.includes(item.key)) {
+                    si = si.filter((x: any) => x !== item.key);
                   } else {
-                    si = [...si, item.id];
+                    si = [...si, item.key];
                   }
                   setState({
                     ...state,
@@ -49,11 +45,15 @@ const AuthImageOption: React.FC<Props> = ({ challenge, onValueChange }) => {
                 }}
               >
                 <img
-                  src={item.image}
+                  src={
+                    item.value.startsWith('data:image')
+                      ? item.value
+                      : `data:image/png;base64,${item.value}`
+                  }
                   className="relative h-full w-full"
                   alt=""
                 />
-                {state.selectedImages.includes(item.id) && (
+                {state.selectedImages.includes(item.key) && (
                   <div className="absolute top-1 left-1 z-10 rounded-full bg-[#468EE5] p-1">
                     <MdCheck name="check" size={20} color="white" />
                   </div>

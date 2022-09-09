@@ -1,17 +1,18 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import { useAppSelector } from '@/client/app/hooks';
 import { Header } from '@/components';
-import { getBankData, htw } from '@/utils/Helper';
+import { htw } from '@/utils/Helper';
 
 const BankErrorScreen: React.FC = () => {
   const router = useRouter();
-  const { bankId } = router.query;
-  const bank = getBankData(bankId);
-
+  const { selected_institution } = useAppSelector((state) => state.instituion);
+  const { error } = useAppSelector((state) => state.general);
+  console.log(error);
   return (
     <div className="flex h-screen flex-col justify-between bg-white">
-      <Header image={bank?.image} />
+      <Header image={selected_institution?.logo_url!} />
 
       <div className="flex grow flex-col items-center justify-center px-5">
         <img
@@ -21,7 +22,10 @@ const BankErrorScreen: React.FC = () => {
         />
         <div className={`${htw.text.title}`}>Something went wrong</div>
         <div className={`${htw.text.description}`}>
-          There was an error while submitting the form. Please try again later.
+          {error?.code ||
+            error?.message ||
+            `${error}` ||
+            'There was an error while submitting the form. Please try again later.'}
         </div>
       </div>
 
@@ -38,11 +42,6 @@ const BankErrorScreen: React.FC = () => {
             Try Another Bank
           </div>
         </button>
-
-        {/* <div className={htw.text.info}>
-          Don’t get the code?{' '}
-          <div className="text-primary font-bold">Please wait (0:30)</div>
-        </div> */}
       </div>
     </div>
   );

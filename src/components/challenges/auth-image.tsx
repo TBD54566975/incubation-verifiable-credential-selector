@@ -13,7 +13,11 @@ const AuthImage: React.FC<Props> = ({ challenge, onValueChange }) => {
 
       <div className="mt-5 w-full bg-[#F5F5F5] p-8">
         <img
-          src={`data:image/png;base64,${challenge.data}`}
+          src={
+            (challenge.data! as string).startsWith('data:image')
+              ? (challenge.data as string)
+              : `data:image/png;base64,${challenge.data}`
+          }
           className="h-20 w-full"
           alt=""
         />

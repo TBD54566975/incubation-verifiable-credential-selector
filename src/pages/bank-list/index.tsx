@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 // import allBanks from '@/data/banks';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -6,6 +7,7 @@ import type { Institution } from 'shared/contract';
 
 import { useAppDispatch, useAppSelector } from '@/client/app/hooks';
 import {
+  initAsync,
   loadInstitutionsAsync,
   selectInstitutionAsync,
 } from '@/client/features/institutions';
@@ -13,15 +15,19 @@ import { Header, Input } from '@/components';
 
 const BankListScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { institutions = [] } = useAppSelector(
-    (state) => state.instituion.institution_list || { institutions: [] }
+  const { request, logged_in, institution_list } = useAppSelector(
+    (state) => state.instituion
   );
-
+  const { institutions } = institution_list || { institutions: [] };
+  const router = useRouter();
   useEffect(() => {
-    if (institutions.length === 0) {
+    if (!request || logged_in) {
+      dispatch(initAsync({ query: router.query }));
+    }
+    if (request && institutions.length === 0) {
       dispatch(loadInstitutionsAsync());
     }
-  }, []);
+  }, [request, router.query]);
 
   return (
     <div className="h-full justify-between bg-white">
@@ -35,9 +41,7 @@ const BankListScreen: React.FC = () => {
         <Input
           placeholder="Search Bank"
           onChange={(text: string) => {
-            if (text && text.length >= 3) {
-              dispatch(loadInstitutionsAsync(text));
-            }
+            dispatch(loadInstitutionsAsync(text));
           }}
           icon={<AiOutlineSearch size={20} color="#222222" />}
         />
@@ -47,7 +51,9 @@ const BankListScreen: React.FC = () => {
             key={bank.id}
             className={`flex w-full flex-row items-center border-b border-[#E7E7E7] p-4`}
             onClick={() => {
-              dispatch(selectInstitutionAsync(bank.id!));
+              dispatch(
+                selectInstitutionAsync({ instituion: bank, navigate: true })
+              );
             }}
           >
             <div className="w-4/12">

@@ -4,3 +4,7 @@ export interface InitialRequest {
   institution_id?: string;
   connection_id?: string;
 }
+
+export interface WidgetError {
+  error: string | { message?: string; code?: string };
+}

@@ -5,23 +5,14 @@ const config = require('../../config');
 
 function buildAuthCode(httpMethod, url) {
   const authPath = url.substring(url.lastIndexOf('/')).toLowerCase();
-  const userId = config.SophtronApiUserId;
-  const secret = Buffer.from(config.SophtronApiUserSecret, 'base64');
+  const integrationKey = Buffer.from(config.SophtronApiUserSecret, 'base64');
   const plainKey = `${httpMethod.toUpperCase()}\n${authPath}`;
   const b64Sig = crypto
-    .createHmac('sha256', secret)
+    .createHmac('sha256', integrationKey)
     .update(plainKey)
     .digest('base64');
-  const authString = `FIApiAUTH:${userId}:${b64Sig}:${authPath}`;
+  const authString = `FIApiAUTH:${config.SophtronApiUserId}:${b64Sig}:${authPath}`;
   return authString;
-}
-
-function getHeaders(url, headers) {
-  headers = headers || {};
-  if (!headers.Authorization) {
-    headers.Authorization = buildAuthCode('get', url);
-  }
-  return headers;
 }
 
 function stream(url, data, target) {
@@ -73,10 +64,9 @@ function wget(url) {
 }
 
 function get(url, headers, returnFullResObject) {
-  const h = getHeaders(url, headers);
   logger.debug(`get request: ${url}`);
   return axios
-    .get(url, { h })
+    .get(url, { headers })
     .then((res) => {
       logger.debug(`Received get response from ${url}`);
       return returnFullResObject ? res : res.data;
@@ -90,7 +80,7 @@ function get(url, headers, returnFullResObject) {
 function post(url, data, headers, returnFullResObject) {
   logger.debug(`post request: ${url}`);
   return axios
-    .post(url, data, { headers: getHeaders(url, headers) })
+    .post(url, data, { headers })
     .then((res) => {
       logger.debug(`Received post response from ${url}`);
       return returnFullResObject ? res : res.data;

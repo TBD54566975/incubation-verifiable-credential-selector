@@ -7,9 +7,18 @@ import type {
   ProviderApiClient,
   UpdateConnectionRequest,
 } from '../../../shared/contract';
-import { ChallengeType, ConnectionStatus } from '../../../shared/contract';
+import {
+  Challenge,
+  ChallengeType,
+  ConnectionStatus,
+} from '../../../shared/contract';
+import * as logger from '../../infra/logger';
 import type { InstitutionResponse } from '../mxClient';
-import { Configuration, MxPlatformApiFactory } from '../mxClient';
+import {
+  Configuration,
+  CredentialRequest,
+  MxPlatformApiFactory,
+} from '../mxClient';
 import { mx as mxConfig } from './configuration';
 
 function fromMxInstitution(ins: InstitutionResponse): Institution {
@@ -18,6 +27,7 @@ function fromMxInstitution(ins: InstitutionResponse): Institution {
     logo_url: ins.medium_logo_url || ins.small_logo_url!,
     name: ins.name!,
     url: ins.url!,
+    provider: 'mx',
   };
 }
 
@@ -47,6 +57,8 @@ export class MxApi implements ProviderApiClient {
     institutionId: string
   ): Promise<Array<Credential>> {
     const res = await this.apiClient.listInstitutionCredentials(institutionId);
+    // console.log('ListInstitutionCredentials')
+    // console.log(res.data.credentials);
     return res.data.credentials!.map((item) => ({
       id: item.guid!,
       label: item.field_name!,
@@ -57,18 +69,34 @@ export class MxApi implements ProviderApiClient {
     request: CreateConnectionRequest,
     userId: string
   ): Promise<Connection> {
-    // let username = request.credentials.find(item => item.key === 'username').value;
-    // let password = request.credentials.find(item => item.key === 'password').value;
+    // console.log(request);
+    // console.log(userId)
+    // console.log(mxConfig.demoMemberId)
+    if (request.institution_id === 'mxbank' && userId === mxConfig.demoUserId) {
+      const existing = await this.apiClient.listMembers(userId);
+      logger.info(`Deleting demo members: ${existing.data.members.length}`);
+      await Promise.all(
+        existing.data.members.map((m) =>
+          this.apiClient.deleteMember(m.guid, userId)
+        )
+      );
+    }
     const entityId = request.institution_id;
     // let res = await this.apiClient.listInstitutionCredentials(entityId);
-    // let usernameGuid = res.data.credentials.find(item => item.field_name === 'username').guid;
-    // let passwordGuid = res.data.credentials.find(item => item.field_name === 'password').guid;
+    // console.log(request)
     const ret = await this.apiClient.createMember(userId, {
       member: {
-        credentials: request.credentials,
+        credentials: request.credentials.map(
+          (c) =>
+            <CredentialRequest>{
+              guid: c.id,
+              value: c.value,
+            }
+        ),
         institution_code: entityId,
       },
     });
+    // console.log(ret.data)
     const member = ret.data.member!;
     return {
       id: member.id!,
@@ -81,17 +109,16 @@ export class MxApi implements ProviderApiClient {
     request: UpdateConnectionRequest,
     userId: string
   ): Promise<Connection> {
-    // let memberRes = await this.apiClient.readMember(request.id, userId);
-    // let member = memberRes.data.member;
-    // let username = request.credentials.find(item => item.key === 'username').value;
-    // let password = request.credentials.find(item => item.key === 'password').value;
-    // let entityId = member.institution_code;
-    // let res = await this.apiClient.listInstitutionCredentials(entityId);
-    // let usernameGuid = res.data.credentials.find(item => item.field_name === 'username').guid;
-    // let passwordGuid = res.data.credentials.find(item => item.field_name === 'password').guid;
+    // console.log("UpdateConnection")
     const ret = await this.apiClient.updateMember(request.id!, userId, {
       member: {
-        credentials: request.credentials,
+        credentials: request.credentials.map(
+          (c) =>
+            <CredentialRequest>{
+              guid: c.id,
+              value: c.value,
+            }
+        ),
       },
     });
     const member = ret.data.member!;
@@ -126,42 +153,44 @@ export class MxApi implements ProviderApiClient {
         ConnectionStatus[
           member.connection_status! as keyof typeof ConnectionStatus
         ],
-      challenges: (member.challenges || []).map((item) => {
-        let type = ChallengeType.QUESTION;
+      challenges: (member.challenges || []).map((item, idx) => {
+        const c: Challenge = {
+          id: item.guid || `${idx}`,
+          type: ChallengeType.QUESTION,
+          question: item.label,
+        };
         switch (item.type) {
           case 'TEXT':
-            type = ChallengeType.QUESTION;
+            c.type = ChallengeType.QUESTION;
+            c.data = [{ key: `${idx}`, value: item.label }];
             break;
           case 'OPTIONS':
-            type = ChallengeType.OPTIONS;
+            c.type = ChallengeType.OPTIONS;
+            c.question = item.label;
+            c.data = (item.options || []).map((o) => ({
+              key: o.label || o.value!,
+              value: o.value,
+            }));
             break;
           case 'TOKEN':
-            type = ChallengeType.TOKEN;
+            c.type = ChallengeType.TOKEN;
+            c.data = item.label;
             break;
           case 'IMAGE_DATA':
-            type = ChallengeType.IMAGE;
+            c.type = ChallengeType.IMAGE;
+            c.data = item.image_data;
             break;
           case 'IMAGE_OPTIONS':
-            type = ChallengeType.IMAGE_OPTIONS;
+            c.type = ChallengeType.IMAGE_OPTIONS;
+            c.data = (item.image_options || []).map((io) => ({
+              key: io.label || io.value!,
+              value: io.data_uri || io.value,
+            }));
             break;
           default:
             break; // todo?
         }
-        return {
-          id: item.guid!,
-          type,
-          question: item.label,
-          data:
-            item.image_data ||
-            (item.options || []).map((o) => ({
-              key: o.label || o.value!,
-              value: o.value,
-            })) ||
-            (item.image_options || []).map((io) => ({
-              key: io.label || io.value!,
-              value: io.data_uri || io.value,
-            })),
-        };
+        return c;
       }),
     };
   }
@@ -172,8 +201,8 @@ export class MxApi implements ProviderApiClient {
   ): Promise<boolean> {
     const res = await this.apiClient.resumeAggregation(request.id!, userId, {
       member: {
-        challenges: request.challenges!.map((item) => ({
-          guid: item.id,
+        challenges: request.challenges!.map((item, idx) => ({
+          guid: item.id || `${idx}`,
           value: <string>item.response,
         })),
       },

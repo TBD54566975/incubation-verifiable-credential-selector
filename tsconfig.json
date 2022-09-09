@@ -42,6 +42,6 @@
     },
     "typeRoots": ["node_modules/@types", "shared/types"]
   },
-  "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.cy.ts"],
+  "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.cy.ts", "./server"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

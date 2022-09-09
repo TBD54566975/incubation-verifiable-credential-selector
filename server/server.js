@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
-const contextHandler = require('./infra/context.ts');
+const { contextHandler } = require('./infra/context.ts');
 const api = require('./api');
 const http = require('./serviceClients/http');
 const logger = require('./infra/logger');
@@ -20,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     var resourcePath = `${config.ResourcePrefix}${config.ResourceVersion}${req.path.replace('/static', '')}`;
 //     http.stream(resourcePath, null, res)
 // })
+app.get('/ping', function (req, res) {
+    res.send('ok');
+});
 
 Object.keys(api).forEach((key) => {
   app.post(`/api/${key}`, contextHandler, (req, res) => {

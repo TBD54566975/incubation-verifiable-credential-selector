@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useAppDispatch, useAppSelector } from '@/client/app/hooks';
+import { initAsync } from '@/client/features/institutions';
 import { htw } from '@/utils/Helper';
 
 const HomeScreen: React.FC = () => {
@@ -10,6 +12,13 @@ const HomeScreen: React.FC = () => {
       pathname: '/bank-list',
     });
   };
+  const { request } = useAppSelector((state) => state.instituion);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!request) {
+      dispatch(initAsync({ query: router.query }));
+    }
+  }, [router.query]);
   return (
     <div className="relative flex h-screen flex-col justify-between bg-white p-5">
       {/* <div className="absolute -top-5 left-0 w-full items-center justify-center opacity-70">
