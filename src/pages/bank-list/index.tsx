@@ -15,19 +15,19 @@ import { Header, Input } from '@/components';
 
 const BankListScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { request, logged_in, institution_list } = useAppSelector(
+  const { request, logged_in, institution_list, query } = useAppSelector(
     (state) => state.instituion
   );
   const { institutions } = institution_list || { institutions: [] };
   const router = useRouter();
   useEffect(() => {
-    if (!request || logged_in) {
+    if ((!request || logged_in) && router.isReady) {
       dispatch(initAsync({ query: router.query }));
     }
     if (request && institutions.length === 0) {
       dispatch(loadInstitutionsAsync());
     }
-  }, [request, router.query]);
+  }, [request, router.query, router.isReady]);
 
   return (
     <div className="h-full justify-between bg-white">
@@ -43,6 +43,7 @@ const BankListScreen: React.FC = () => {
           onChange={(text: string) => {
             dispatch(loadInstitutionsAsync(text));
           }}
+          value={query}
           icon={<AiOutlineSearch size={20} color="#222222" />}
         />
 

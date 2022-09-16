@@ -15,10 +15,10 @@ const HomeScreen: React.FC = () => {
   const { request } = useAppSelector((state) => state.instituion);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (!request) {
+    if (!request && router.isReady) {
       dispatch(initAsync({ query: router.query }));
     }
-  }, [router.query]);
+  }, [router.query, router.isReady]);
   return (
     <div className="relative flex h-screen flex-col justify-between bg-white p-5">
       {/* <div className="absolute -top-5 left-0 w-full items-center justify-center opacity-70">

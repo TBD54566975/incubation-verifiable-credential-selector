@@ -220,6 +220,9 @@ export class SophtronApi implements ProviderApiClient {
     const password = request.credentials.find(
       (item) => item.id === 'password'
     )!.value;
+    console.log(username);
+    console.log(password);
+    console.log(request);
     let entityId = request.institution_id;
     if (!uuid.test(entityId)) {
       const name = entityId;
@@ -238,7 +241,7 @@ export class SophtronApi implements ProviderApiClient {
       case 'add':
       case 'utils':
       case 'util':
-        ret = await this.apiClient.CreateUserInstitutionWithRefresh(
+        ret = await this.apiClient.CreateUserInstitutionWithProfileInfo(
           username,
           password,
           entityId

@@ -3,6 +3,7 @@ export interface Context {
   connection_id?: string;
   user_id?: string;
   provider?: string;
+  job_type?: string;
 }
 
 export interface KeyValuePair {
@@ -47,11 +48,6 @@ export enum ChallengeType {
   TOKEN,
 }
 
-export enum JobType {
-  AGG = 'aggregation',
-  AUTH = 'auth',
-}
-
 export interface Challenge {
   id: string;
   question?: string | null;
@@ -78,7 +74,7 @@ export interface Institutions {
 
 export interface CreateConnectionRequest {
   id?: string;
-  initial_job_type?: JobType;
+  initial_job_type?: string;
   background_aggregation_is_disabled?: boolean;
   credentials: Array<Credential>;
   institution_id: string;
@@ -98,6 +94,7 @@ export interface Connection {
   is_being_aggregated?: boolean | null;
   is_oauth?: boolean | null;
   name?: string | null;
+  provider?: string | null;
   user_id?: string | null;
   challenges?: Array<Challenge>;
   has_accounts?: boolean | null;

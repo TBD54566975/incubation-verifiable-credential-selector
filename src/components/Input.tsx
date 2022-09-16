@@ -8,6 +8,7 @@ interface Props {
   isPassword?: boolean;
   isError?: boolean;
   className?: string;
+  value?: string;
 }
 
 const Input: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const Input: React.FC<Props> = ({
   isPassword,
   isError,
   className,
+  value,
 }) => {
   const [state, setState] = React.useState({
     isFocusOnTextInput: false,
@@ -55,6 +57,7 @@ const Input: React.FC<Props> = ({
           setState({ ...state, isFocusOnTextInput: false });
         }}
         ref={inputRef}
+        value={value}
       />
     </button>
   );

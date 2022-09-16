@@ -24,7 +24,10 @@ const BankLoginScreen: React.FC = () => {
   );
   useEffect(() => {
     const { bankId, connection_id } = router.query;
-    if (!request || request.connection_id !== (connection_id as string)) {
+    if (
+      (!request || request.connection_id !== (connection_id as string)) &&
+      router.isReady
+    ) {
       dispatch(
         initAsync({
           query: router.query,
@@ -40,7 +43,7 @@ const BankLoginScreen: React.FC = () => {
         })
       );
     }
-  }, [request, router.query]);
+  }, [request, router.query, router.isReady]);
 
   const [state, setState] = React.useState({
     values: [] as string[],

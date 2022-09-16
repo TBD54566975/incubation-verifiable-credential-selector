@@ -10,6 +10,12 @@ function post(path, data) {
 
 module.exports = {
   name: 'sophtronClient',
+  async getUserIntegrationKey() {
+    const ret = await post('/User/GetUserIntegrationKey', {
+      Id: config.SophtronApiUserId,
+    });
+    return ret;
+  },
   getUserInstitutionById(id) {
     return post('/UserInstitution/GetUserInstitutionByID', {
       UserInstitutionID: id,
@@ -75,6 +81,16 @@ module.exports = {
   },
   CreateUserInstitutionWithRefresh(username, password, institutionId) {
     const url = '/UserInstitution/CreateUserInstitutionWithRefresh';
+    const data = {
+      UserName: username,
+      Password: password,
+      InstitutionID: institutionId,
+      UserID: config.SophtronApiUserId,
+    };
+    return post(url, data);
+  },
+  CreateUserInstitutionWithProfileInfo(username, password, institutionId) {
+    const url = '/UserInstitution/CreateUserInstitutionWithProfileInfo';
     const data = {
       UserName: username,
       Password: password,

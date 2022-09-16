@@ -4,6 +4,7 @@ module.exports = {
   context(req, res) {
     res.context = req.body;
     res.send(req.body);
+    return {};
   },
   async search(req, res) {
     const { query } = req.body;

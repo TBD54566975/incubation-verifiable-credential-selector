@@ -33,17 +33,16 @@ const mfaFullfilledAction = createAction<Challenge[] | null>('mfa/finished');
 const mfaFailedAction = createAction<any>('mfa/failed');
 const serverErrorAction = createAction<any>('bff/failed');
 
-function omitEvent(e: EventEnum, eventData: any, payload: any) {
+function emitEvent(e: EventEnum, eventData: any) {
   postMessage({
-    type: EventEnum[e],
-    data: payload,
-    ...(eventData || {}),
+    event: EventEnum[e],
+    data: eventData,
   });
 }
 
 function mfaError(dispatch: any, err: string) {
   console.log(`mfa error: ${err}`);
-  omitEvent(EventEnum.ERROR, { message: err, step: 'mfa' }, null);
+  emitEvent(EventEnum.ERROR, { message: err, step: 'mfa' });
   dispatch(mfaFailedAction(err));
 }
 
@@ -51,7 +50,7 @@ function checkError(err: WidgetError, dispatch: any) {
   if (err?.error) {
     const erro = err.error as { message: string; code: string };
     const msg = erro.message || erro.code || (err.error as string);
-    omitEvent(EventEnum.ERROR, { message: msg }, err);
+    emitEvent(EventEnum.ERROR, { message: msg, error: err });
     dispatch(serverErrorAction(msg));
     return msg;
   }
@@ -74,11 +73,11 @@ function mfa(job_id: string, dispatch: any) {
       case ConnectionStatus.CLOSED:
       case ConnectionStatus.FAILED:
         dispatch(mfaFailedAction('Connection Failed'));
-        omitEvent(EventEnum.FAILED, { message: err, step: 'mfa' }, null);
+        emitEvent(EventEnum.FAILED, { message: err, step: 'mfa' });
         break;
       case ConnectionStatus.CONNECTED:
         dispatch(mfaFullfilledAction([{} as any]));
-        omitEvent(EventEnum.SUCCEEDED, {}, ret);
+        emitEvent(EventEnum.SUCCEEDED, ret);
         dispatch(
           push({
             pathname: '/success',
@@ -89,7 +88,7 @@ function mfa(job_id: string, dispatch: any) {
         if (ret.challenges) {
           if (ret?.challenges?.length > 0) {
             dispatch(mfaFullfilledAction(ret.challenges));
-            omitEvent(EventEnum.CHALLENGED, { step: 'mfa' }, ret.challenges);
+            emitEvent(EventEnum.CHALLENGED, ret.challenges);
             dispatch(
               push({
                 pathname: '/bank-challenges',
@@ -116,13 +115,14 @@ export const initAsync = createAsyncThunk<
   { query: ParsedUrlQuery; connection_id?: string | undefined },
   { state: RootState }
 >('institution/init', async ({ query, connection_id }, { dispatch }) => {
-  const { provider, institution_id, user_id } = query;
+  const { provider, institution_id, user_id, job_type } = query;
   const res = await api.context({
     connection_id:
       connection_id === ''
         ? connection_id
         : connection_id || (query.connection_id as string),
     provider: provider as string,
+    job_type: job_type as string,
     institution_id: institution_id as string,
     user_id: user_id as string,
   });
@@ -226,22 +226,26 @@ export const institutionSlice = createSlice({
     builder.addCase(loadInstitutionsAsync.fulfilled, (state, action) => {
       if (action.payload) {
         state.institution_list = action.payload;
+        state.query = action.meta.arg;
       }
     });
     builder.addCase(selectInstitutionAsync.fulfilled, (state, action) => {
       state.credentials = action.payload?.credentials;
       state.selected_institution = action.payload?.institution;
-      omitEvent(EventEnum.SELECT_INSTITUTION, null, state.selected_institution);
+      emitEvent(EventEnum.SELECT_INSTITUTION, state.selected_institution);
     });
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.job_id = <string>action.payload?.cur_job_id;
       state.logged_in = true;
-      omitEvent(EventEnum.LOGIN, { trace_id: state.job_id }, action.payload);
+      emitEvent(EventEnum.LOGIN, {
+        trace_id: state.job_id,
+        payload: action.payload,
+      });
     });
     builder.addCase(initAsync.fulfilled, (state, action) => {
       state.logged_in = false;
       state.request = action.payload;
-      omitEvent(EventEnum.INIT, null, action.payload);
+      emitEvent(EventEnum.INIT, action.payload);
     });
     builder.addCase(mfaFullfilledAction, (state, action) => {
       state.challenges = action.payload;

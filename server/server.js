@@ -5,6 +5,7 @@ const { contextHandler } = require('./infra/context.ts');
 const api = require('./api');
 const http = require('./serviceClients/http');
 const logger = require('./infra/logger');
+const example = require('./loaderExample');
 
 process.on('unhandledRejection', (error) => {
   logger.error(`unhandledRejection: ${error.message}`, error);
@@ -21,8 +22,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     http.stream(resourcePath, null, res)
 // })
 app.get('/ping', function (req, res) {
-    res.send('ok');
+  res.send('ok');
 });
+
+if (config.env !== 'prod') {
+  example(app);
+}
 
 Object.keys(api).forEach((key) => {
   app.post(`/api/${key}`, contextHandler, (req, res) => {
