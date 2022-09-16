@@ -319,10 +319,11 @@ export class SophtronApi implements ProviderApiClient {
     } else if (job.SuccessFlag === false) {
       jobStatus = 'failed';
     }
+    console.log(job);
     switch (jobStatus) {
       case 'success':
-      case 'Completed':
-      case 'AccountsReady':
+        // case 'Completed':
+        // case 'AccountsReady':
         status = ConnectionStatus.CONNECTED;
         break;
       case 'failed':
@@ -377,6 +378,7 @@ export class SophtronApi implements ProviderApiClient {
 
   async AnswerChallenge(request: UpdateConnectionRequest): Promise<boolean> {
     const c = request.challenges![0]!;
+    console.log(c);
     switch (c.type) {
       case ChallengeType.TOKEN:
         await this.apiClient.jobTokenInput(request.id, null, null, true);

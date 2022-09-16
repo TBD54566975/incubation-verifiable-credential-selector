@@ -63,7 +63,7 @@ module.exports = async function (app) {
     })
   );
   app.get('/example/*', async (req, res) => {
-    console.log('loading default page');
+    // console.log('loading default page');
     const resourcePath = `${config.ResourcePrefix}${
       config.ResourceVersion
     }/${req.path.replace('/example/', '').replace('did', 'loader')}.html`;

@@ -16,7 +16,7 @@ function buildAuthCode(httpMethod, url) {
 }
 
 function stream(url, data, target) {
-  logger.debug(`stream request: ${url}`);
+  // logger.debug(`stream request: ${url}`);
   return axios({
     method: data ? 'post' : 'get',
     data,
@@ -24,7 +24,7 @@ function stream(url, data, target) {
     responseType: 'stream',
   })
     .then((res) => {
-      logger.debug(`Received stream response from ${url}`);
+      // logger.debug(`Received stream response from ${url}`);
       return res;
     })
     .catch((error) => {
