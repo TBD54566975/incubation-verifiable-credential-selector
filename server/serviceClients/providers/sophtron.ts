@@ -220,9 +220,6 @@ export class SophtronApi implements ProviderApiClient {
     const password = request.credentials.find(
       (item) => item.id === 'password'
     )!.value;
-    console.log(username);
-    console.log(password);
-    console.log(request);
     let entityId = request.institution_id;
     if (!uuid.test(entityId)) {
       const name = entityId;

@@ -130,8 +130,7 @@ export async function login(
       return res;
     }
     logger.error(
-      `failed creating connection with instituionId : ${institution_id}`,
-      res
+      `failed creating connection with instituionId : ${institution_id}`
     );
     return {
       error: `failed creating connection with instituionId : ${institution_id}`,
