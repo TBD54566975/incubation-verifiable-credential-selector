@@ -3,6 +3,7 @@ const service = require('./serviceClients/services.ts');
 module.exports = {
   context(req, res) {
     res.context = req.body;
+    res.context.job_type = res.context.job_type || 'agg';
     res.send(req.body);
     return {};
   },
