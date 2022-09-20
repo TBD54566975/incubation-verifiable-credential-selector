@@ -10,7 +10,7 @@ The VCS is Free Open Source Software and is part of the Block TBD Incubation Ini
 
 Currently the VCS support retrieving credentials from over 40,000 banks, credit unions, brokerages and utility companies. 
 
-<screenshots>
+screenshots here.
 
 ### Install
 `npm install --legacy-peer-deps`
