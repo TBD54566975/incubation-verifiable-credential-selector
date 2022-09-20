@@ -6,7 +6,7 @@ For example a developer building an application to allow users to purchase bitco
 
 By presenting this widget at the appropriate step in the onboarding process the user can select their bank account, provide the required credentials (including MFA) and obtain a VC that is digitally signed by the Verifiable Credential Issuers.
 
-The VCS is MIT Licensed Free Open Source Software and is part of the Block TBD Incubation Initiative.
+The VCS is Free Open Source Software and is part of the Block TBD Incubation Initiative.
 
 Currently the VCS support retrieving credentials from over 40,000 banks, credit unions, brokerages and utility companies. 
 
