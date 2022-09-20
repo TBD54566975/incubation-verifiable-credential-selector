@@ -37,8 +37,8 @@ const HomeScreen: React.FC = () => {
         />
         <h1 className={htw.text.title}>Connect Your Account</h1>
         <div className={htw.text.description}>
-          Sophtron lets you securely connect your financial accounts in seconds
-          without a worry and it&apos;s secured!
+          Tbdex widget lets you securely connect your financial accounts in
+          seconds without a worry and it&apos;s secured!
         </div>
       </div>
 
@@ -52,9 +52,7 @@ const HomeScreen: React.FC = () => {
 
         <div className={htw.text.info}>
           By selecting &ldquo;Connect&rdquo; you agree to the{' '}
-          <div className="font-bold text-primary">
-            Sophtron end user privacy policy
-          </div>
+          <div className="font-bold text-primary">End user privacy policy</div>
         </div>
       </div>
     </div>

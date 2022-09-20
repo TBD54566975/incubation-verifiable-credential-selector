@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/client/app/hooks';
 import {
   initAsync,
   loadInstitutionsAsync,
+  search,
   selectInstitutionAsync,
 } from '@/client/features/institutions';
 import { Header, Input } from '@/components';
@@ -31,7 +32,11 @@ const BankListScreen: React.FC = () => {
 
   return (
     <div className="h-full justify-between bg-white">
-      <Header image="https://derrint.sirv.com/Images/sophtron/logos/Sophtron.png" />
+      <Header
+        image={
+          /* 'https://derrint.sirv.com/Images/sophtron/logos/Sophtron.png' */ ''
+        }
+      />
 
       <div className="flex-1 grow p-5 pb-10">
         <div className="mb-3 text-lg font-semibold text-black">
@@ -41,6 +46,7 @@ const BankListScreen: React.FC = () => {
         <Input
           placeholder="Search Bank"
           onChange={(text: string) => {
+            dispatch(search(text));
             dispatch(loadInstitutionsAsync(text));
           }}
           value={query}
@@ -73,11 +79,11 @@ const BankListScreen: React.FC = () => {
         ))}
         {institutions.length === 0 && (
           <div className="my-16 items-center">
-            <img
+            {/* <img
               src="https://derrint.sirv.com/Images/sophtron/illustration-not-found.png"
               className="my-5 h-48 w-full object-contain"
               alt=""
-            />
+            /> */}
             <div className="my-4 text-center font-sans text-lg font-bold">
               Bank/Institution Not Found
             </div>

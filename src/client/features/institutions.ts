@@ -218,13 +218,13 @@ export const institutionSlice = createSlice({
   name: 'institution',
   initialState: <InstitutionState>{},
   reducers: {
-    // setConnectionId: (state, action) => {
-    //     state.connection_id = action.payload;
-    // }
+    search: (state, action) => {
+      state.query = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loadInstitutionsAsync.fulfilled, (state, action) => {
-      if (action.payload) {
+      if (action.payload && state.query === action.meta.arg) {
         state.institution_list = action.payload;
         state.query = action.meta.arg;
       }
@@ -252,6 +252,6 @@ export const institutionSlice = createSlice({
     });
   },
 });
-// export const { setConnectionId } = institutionSlice.actions;
+export const { search } = institutionSlice.actions;
 
 export default institutionSlice.reducer;

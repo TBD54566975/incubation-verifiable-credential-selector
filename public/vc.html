@@ -15,29 +15,29 @@
         <div class="container" >
             <img class="image" src="/static/phone.png">
             <div id="small-container">
-                <div class="carde" v-if="!paymentVc.show">
-                    <p style="margin-left:auto; margin-right: auto;font-weight: bold;">Payment Credential</p>
-                    <button class="btn btn-primary" @click="paymentFinished ? showPaymentVc(): connectForPayment()" >{{ paymentFinished ? 'Show Credential' : 'Connect Your Bank' }}</button>
+                <div class="carde" v-if="!identityVc.show">
+                    <p style="margin-left:auto; margin-right: auto;font-weight: bold;">Identity Credential</p>
+                    <button class="btn btn-primary" @click="identityFinished ? showIdentityVc(): connectForIdentity()" >{{ identityFinished ? 'Show Credential' : 'Connect Your Bank' }}</button>
                 </div>
-                <div class="carde" v-if="paymentVc.show && !paymentVc.detail">
-                    <p style="margin-left:auto; margin-right: auto;font-weight: bold;">Payment Credential</p>
+                <div class="carde" v-if="identityVc.show && !identityVc.detail">
+                    <p style="margin-left:auto; margin-right: auto;font-weight: bold;">Identity Credential</p>
                     <div class="image-container">
                         <img class="cert" src="/static/cert.png"> 
-                        <img class="chase" v-bind:src="paymentVc.obj.credentialSubject.fiAttributes[1].value">
+                        <img class="chase" v-bind:src="identityVc.obj.credentialSubject.fiAttributes[1].value">
                     </div>
                     <p style="font-weight: bold; margin-top: 2%;margin-bottom: 1%!important">{{ identityName }}</p>
                     <p style="margin-bottom: 1%!important">{{ identityEmail}}</p>
                     <p>{{ identityAddress }}</p>
                     <p style="margin-bottom: 1%!important">Verified credental issued by: <span style="font-weight: bold;"> Sophtron, Inc.</span></p>
-                    <p>Issued: {{ new Date(paymentVc.obj.issuanceDate) }}</p>
+                    <p>Issued: {{ new Date(identityVc.obj.issuanceDate) }}</p>
                     <div class="image-container2">
                         <img class="check" src="/static/check.png"> This certificate is valid.
                     </div>
-                    <a class="link" @click="paymentToggleDetails">Details</a>
+                    <a class="link" @click="identityToggleDetails">Details</a>
                 </div>
-                <div class="carde" v-if="paymentVc.show && paymentVc.detail">
-                    <pre>{{ paymentVcJson }}</pre>
-                    <a class="link" @click="paymentToggleDetails">Less</a>
+                <div class="carde" v-if="identityVc.show && identityVc.detail">
+                    <pre>{{ identityVcJson }}</pre>
+                    <a class="link" @click="identityToggleDetails">Less</a>
                 </div>
                 <div class="carde" v-if="!bankingVc.show">
                     <p style="margin-left:auto; margin-right: auto;font-weight: bold;">Bank Account Credential</p>
@@ -78,13 +78,13 @@
                 return {
                     connection: '',
                     bankingFinished: false,
-                    paymentFinished: false,
+                    identityFinished: false,
                     bankingVc: {
                         show: false, 
                         detail: false,
                         obj: null
                     },
-                    paymentVc: {
+                    identityVc: {
                         show: false, 
                         detail: false,
                         obj: null
@@ -95,8 +95,8 @@
                 window.demoApp = this;
             },
             computed: {
-                paymentVcJson(){
-                    return JSON.stringify(this.paymentVc.obj, null, 2);
+                identityVcJson(){
+                    return JSON.stringify(this.identityVc.obj, null, 2);
                 },
                 bankingVcJson(){
                     return JSON.stringify(this.bankingVc.obj, null, 2)
@@ -107,7 +107,7 @@
                     })[0] || {};
                 },
                 identityName(){
-                    let a = this.paymentVc.obj.credentialSubject.customer.name;
+                    let a = this.identityVc.obj.credentialSubject.customer.name;
                     if(a){
                         return [
                             a.prefix,
@@ -120,10 +120,10 @@
                     return ''
                 },
                 identityEmail(){
-                    return (this.paymentVc.obj.credentialSubject.customer.email || []).find(o => true);
+                    return (this.identityVc.obj.credentialSubject.customer.email || []).find(o => true);
                 },
                 identityAddress(){
-                    let a = (this.paymentVc.obj.credentialSubject.customer.addresses || []).find(o => true);
+                    let a = (this.identityVc.obj.credentialSubject.customer.addresses || []).find(o => true);
                     if(a){
                         return [
                             a.line1,
@@ -158,9 +158,9 @@
                     e.preventDefault();
                     this.bankingVc.detail = !this.bankingVc.detail;
                 },
-                paymentToggleDetails(e){
+                identityToggleDetails(e){
                     e.preventDefault();
-                    this.paymentVc.detail = !this.paymentVc.detail;
+                    this.identityVc.detail = !this.identityVc.detail;
                 },
                 showBankingVc(){
                     axios.get(`/example/did/vc/banking/${this.connection.provider}/${this.connection.id}`).then(res => {
@@ -168,16 +168,16 @@
                         this.bankingVc.obj = res.data;
                     });
                 },
-                showPaymentVc(){
+                showIdentityVc(){
                     axios.get(`/example/did/vc/identity/${this.connection.provider}/${this.connection.id}`).then(res => {
-                        this.paymentVc.show = true;
-                        this.paymentVc.obj = res.data;
+                        this.identityVc.show = true;
+                        this.identityVc.obj = res.data;
                     });
                 },
-                onPaymentFinish(e){
+                onIdentityFinish(e){
                     console.log(e);
                     this.connection = e.data
-                    this.paymentFinished = true;
+                    this.identityFinished = true;
                     return true;
                 },
                 onBankingFinish(e){
@@ -186,12 +186,12 @@
                     this.bankingFinished = true;
                     return true;
                 },
-                connectForPayment(){
-                    this.initWidget(this.onPaymentFinish, 'agg');
+                connectForIdentity(){
+                    this.initWidget(this.onIdentityFinish, 'auth');
                     sophtron.show();
                 },
                 connectForBanking(){
-                    this.initWidget(this.onBankingFinish, 'auth');
+                    this.initWidget(this.onBankingFinish, 'agg');
                     sophtron.show();
                 }
             }

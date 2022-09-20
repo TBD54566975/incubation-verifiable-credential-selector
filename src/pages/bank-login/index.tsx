@@ -78,7 +78,7 @@ const BankLoginScreen: React.FC = () => {
         </div>
 
         <div className={htw.text.description}>
-          By providing your credentials you are asking Sophtron to retrieve your
+          By providing your credentials you are asking Tbdex to retrieve your
           financial data and agree to our terms of service.
         </div>
 
@@ -136,8 +136,8 @@ const BankLoginScreen: React.FC = () => {
             <IoShieldCheckmarkOutline size={22} color="#7B8698" />
           </div>
           <div className={`${htw.text.info} shrink px-0 !text-left`}>
-            Your data belongs to you. Sophtron doesn&apos;t sell personal info,
-            and will only use it with your permission.
+            Your data is secure and access to it will only be possible with your
+            permission.
           </div>
         </div>
       </div>

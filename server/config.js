@@ -14,20 +14,6 @@ const providerMapping = {
 };
 
 const demoBanks = [
-  {
-    id: 'Sophtron Bank',
-    name: 'Sophtron Bank',
-    url: 'http://sophtron.com',
-    logo_url: 'https://sophtron.com/Images/logo.png',
-    provider: 'sophtron',
-  },
-  {
-    id: 'mxbank',
-    name: 'MX Bank',
-    url: 'http://mx.com',
-    logo_url: 'https://assets.mx.com/images/home2022/mx-logo.svg',
-    provider: 'mx',
-  },
   // {
   //   id: '4b2eca34-a729-438f-844c-ba8ce51047f9',
   //   name: 'Citibank',
@@ -182,6 +168,20 @@ const demoBanks = [
     name: 'US Bank',
     url: 'https://www.usbank.com/index.html',
     logo_url: 'https://logos-list.s3-us-west-2.amazonaws.com/us_bank_logo.png',
+    provider: 'sophtron',
+  },
+  {
+    id: 'mxbank',
+    name: 'MX Bank',
+    url: 'http://mx.com',
+    logo_url: 'https://assets.mx.com/images/home2022/mx-logo.svg',
+    provider: 'mx',
+  },
+  {
+    id: 'Sophtron Bank',
+    name: 'Sophtron Bank',
+    url: 'http://sophtron.com',
+    logo_url: 'https://sophtron.com/Images/logo.png',
     provider: 'sophtron',
   },
 ];

@@ -14,7 +14,7 @@ const Main = (props: IMainProps) => {
   return (
     <div className="w-full px-1 text-gray-700 antialiased">
       <Meta
-        title="Sophtron Widget"
+        title="Tbdex Widget"
         description="Effortless Next Generation Data Aggregation"
       />
 

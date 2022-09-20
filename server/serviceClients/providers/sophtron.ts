@@ -238,7 +238,7 @@ export class SophtronApi implements ProviderApiClient {
       case 'add':
       case 'utils':
       case 'util':
-        ret = await this.apiClient.CreateUserInstitutionWithProfileInfo(
+        ret = await this.apiClient.CreateUserInstitutionWithFullAccountNumbers(
           username,
           password,
           entityId
@@ -247,7 +247,7 @@ export class SophtronApi implements ProviderApiClient {
       case 'demo':
       case 'auth':
       case 'bankauth':
-        ret = await this.apiClient.CreateUserInstitutionWithFullAccountNumbers(
+        ret = await this.apiClient.CreateUserInstitutionWithProfileInfo(
           username,
           password,
           entityId
