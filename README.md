@@ -46,7 +46,3 @@ However we expect support for the following soon:
 - Drivers License
 - Passport
 - Birth Certificate
-
-
-
-=======
