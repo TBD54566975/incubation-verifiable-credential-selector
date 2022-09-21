@@ -15,14 +15,17 @@ screenshots here.
 
 ### Data flow
 
-Pre-Identity hub 
+####Pre-Identity hub 
 
 VCS sends credentials to VC Issuer.
+
 VC Issuer returns a signed VC to the FinTech App.
 
-With Identity Hub 
+####With Identity Hub 
 VCS sends credentials to VC Issuer.
+
 VC Issuer sends a signed VC to the user's Identity Hub.
+
 Identity Hub sends VC with the FinTech App.
 
 
