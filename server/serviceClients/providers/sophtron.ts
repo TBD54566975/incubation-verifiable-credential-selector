@@ -235,39 +235,36 @@ export class SophtronApi implements ProviderApiClient {
     switch ((request.initial_job_type || '').toLowerCase()) {
       case 'agg':
       case 'aggregation':
+      case 'aggregate':
       case 'add':
       case 'utils':
       case 'util':
+      case 'demo':
+        ret = await this.apiClient.CreateUserInstitutionWithRefresh(
+          username,
+          password,
+          entityId
+        );
+        break;
+      case 'auth':
+      case 'bankauth':
+      case 'verify':
         ret = await this.apiClient.CreateUserInstitutionWithFullAccountNumbers(
           username,
           password,
           entityId
         );
         break;
-      case 'demo':
-      case 'auth':
-      case 'bankauth':
+      case 'identify':
         ret = await this.apiClient.CreateUserInstitutionWithProfileInfo(
           username,
           password,
           entityId
         );
         break;
-      case 'verify':
-        {
-          const userInstitutionID =
-            await this.apiClient.CreateUserInstitutionWOJob(
-              username,
-              password,
-              entityId
-            );
-          ret = await this.apiClient.GetUserInstitutionProfileInfor(
-            userInstitutionID
-          );
-        }
-        break;
       default:
         // TODO create without job?
+        logger.error(`Invalid job type ${request.initial_job_type}`);
         break;
     }
     if (ret) {

@@ -78,7 +78,9 @@ const BankLoginScreen: React.FC = () => {
         </div>
 
         <div className={htw.text.description}>
-          {'By providing your credentials you are asking <Application Name> to connect to <user experience enabled by connection> and agree to the <Application Name> terms of service.'}
+          {
+            'By providing your credentials you are asking <Application Name> to connect to <user experience enabled by connection> and agree to the <Application Name> terms of service.'
+          }
         </div>
 
         <div className="mt-12 w-full">
@@ -130,7 +132,7 @@ const BankLoginScreen: React.FC = () => {
           </div>
         </button>
 
-        <div className="mb-2 flex flex-row" style={{display:'none'}}>
+        <div className="mb-2 flex flex-row" style={{ display: 'none' }}>
           <div className="pt-2 pr-3">
             <IoShieldCheckmarkOutline size={22} color="#7B8698" />
           </div>

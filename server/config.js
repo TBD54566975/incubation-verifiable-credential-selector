@@ -4,13 +4,13 @@ Object.keys(process.env).forEach((k) => {
 });
 
 const providerMapping = {
-  'American Express Credit Card': { id: 'amex', provider: 'mx' },
-  'Chase Bank': { id: 'chase', provider: 'mx' },
-  Chase: { id: 'chase', provider: 'mx' },
-  'Citi Bank': { id: 'citibank', provider: 'mx' },
-  Citi: { id: 'citibank', provider: 'mx' },
-  'Wells Fargo': { id: 'wells_fargo', provider: 'mx' },
-  'Wells Fargo Bank': { id: 'wells_fargo', provider: 'mx' },
+  'American Express Credit Card': { id: 'amex', provider: 'sophtron' },
+  'Chase Bank': { id: 'chase', provider: 'sophtron' },
+  Chase: { id: 'chase', provider: 'sophtron' },
+  'Citi Bank': { id: 'citibank', provider: 'sophtron' },
+  Citi: { id: 'citibank', provider: 'sophtron' },
+  'Wells Fargo': { id: 'wells_fargo', provider: 'sophtron' },
+  'Wells Fargo Bank': { id: 'wells_fargo', provider: 'sophtron' },
 };
 
 const demoBanks = [
@@ -26,7 +26,7 @@ const demoBanks = [
     name: 'Citibank',
     url: 'https://online.citi.com/US/login.do',
     logo_url: 'https://sophtron.com/images/banklogos/citibank.png ',
-    provider: 'mx',
+    provider: 'sophtron',
   },
   // {
   //   id: 'b2a957e5-7bf2-47c0-bd63-ce96736cdacd',
@@ -40,7 +40,7 @@ const demoBanks = [
     name: 'Chase Bank',
     url: 'https://www.chase.com/',
     logo_url: 'https://sophtron.com/images/banklogos/chase.png',
-    provider: 'mx',
+    provider: 'sophtron',
   },
   // {
   //   id: 'e3d4c866-1c48-44c3-9cc5-5e9c7db43ef0',
@@ -54,7 +54,7 @@ const demoBanks = [
     name: 'Wells Fargo',
     url: 'https://connect.secure.wellsfargo.com/auth/login/present?origin=tpb',
     logo_url: 'https://sophtron.com/images/banklogos/wells%20fargo.png',
-    provider: 'mx',
+    provider: 'sophtron',
   },
   // {
   //   id: '40a24f71-16e4-411c-b6e4-05b55577b66e',
@@ -171,18 +171,18 @@ const demoBanks = [
     provider: 'sophtron',
   },
   {
-    id: 'mxbank',
-    name: 'MX Bank',
-    url: 'http://mx.com',
-    logo_url: 'https://assets.mx.com/images/home2022/mx-logo.svg',
-    provider: 'mx',
-  },
-  {
     id: 'Sophtron Bank',
     name: 'Sophtron Bank',
     url: 'http://sophtron.com',
     logo_url: 'https://sophtron.com/Images/logo.png',
     provider: 'sophtron',
+  },
+  {
+    id: 'mxbank',
+    name: 'MX Bank',
+    url: 'http://mx.com',
+    logo_url: 'https://assets.mx.com/images/home2022/mx-logo.svg',
+    provider: 'mx',
   },
 ];
 

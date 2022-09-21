@@ -84,8 +84,9 @@ export class MxApi implements ProviderApiClient {
     const entityId = request.institution_id;
     // let res = await this.apiClient.listInstitutionCredentials(entityId);
     // console.log(request)
-    const ret = await this.apiClient.createMember(userId, {
+    const memberRes = await this.apiClient.createMember(userId, {
       member: {
+        skip_aggregation: request.initial_job_type !== 'agg',
         credentials: request.credentials.map(
           (c) =>
             <CredentialRequest>{
@@ -97,7 +98,12 @@ export class MxApi implements ProviderApiClient {
       },
     });
     // console.log(ret.data)
-    const member = ret.data.member!;
+    const member = memberRes.data.member!;
+    if (request.initial_job_type === 'verify') {
+      await this.apiClient.verifyMember(member.id, userId);
+    } else if (request.initial_job_type === 'identify') {
+      await this.apiClient.identifyMember(member.id, userId);
+    }
     return {
       id: member.id!,
       cur_job_id: member.guid!,
