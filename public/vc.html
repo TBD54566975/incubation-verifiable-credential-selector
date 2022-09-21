@@ -187,11 +187,11 @@
                     return true;
                 },
                 connectForIdentity(){
-                    this.initWidget(this.onIdentityFinish, 'auth');
+                    this.initWidget(this.onIdentityFinish, 'identify');
                     sophtron.show();
                 },
                 connectForBanking(){
-                    this.initWidget(this.onBankingFinish, 'agg');
+                    this.initWidget(this.onBankingFinish, 'verify');
                     sophtron.show();
                 }
             }
