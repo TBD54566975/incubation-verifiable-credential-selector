@@ -9,16 +9,17 @@ By presenting this widget at the appropriate step in the onboarding process the 
 The VCS is Free Open Source Software and is part of the Block TBD Incubation Initiative.
 
 Currently the VCS support retrieving credentials from over 40,000 banks, credit unions, brokerages and utility companies. 
-
-<img src="screenshots/0.png" width="140" height="180" />
-<img src="screenshots/1.png" width="140" height="180" />
-<img src="screenshots/2.png" width="140" height="180" />
-<img src="screenshots/6.png" width="140" height="180" />
-<img src="screenshots/vc_id.png" width="140" height="180" />
-<img src="screenshots/3.png" width="140" height="180" />
-<img src="screenshots/4.png" width="140" height="180" />
-<img src="screenshots/5.png" width="140" height="180" />
-<img src="screenshots/7.png" width="140" height="180" />
+<p float="left">
+  <img src="screenshots/0.png" width="140" height="180" />
+  <img src="screenshots/1.png" width="140" height="180" />
+  <img src="screenshots/2.png" width="140" height="180" />
+  <img src="screenshots/6.png" width="140" height="180" />
+  <img src="screenshots/vc_id.png" width="140" height="180" />
+  <img src="screenshots/3.png" width="140" height="180" />
+  <img src="screenshots/4.png" width="140" height="180" />
+  <img src="screenshots/5.png" width="140" height="180" />
+  <img src="screenshots/7.png" width="140" height="180" />
+</p>
 
 ### Data flow
 
