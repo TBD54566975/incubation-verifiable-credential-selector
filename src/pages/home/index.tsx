@@ -37,8 +37,7 @@ const HomeScreen: React.FC = () => {
         />
         <h1 className={htw.text.title}>Connect Your Account</h1>
         <div className={htw.text.description}>
-          Tbdex widget lets you securely connect your financial accounts in
-          seconds without a worry and it&apos;s secured!
+          {'Connect your financial account to <purpose or user experience enabled by making this connection>'}
         </div>
       </div>
 
@@ -52,7 +51,7 @@ const HomeScreen: React.FC = () => {
 
         <div className={htw.text.info}>
           By selecting &ldquo;Connect&rdquo; you agree to the{' '}
-          <div className="font-bold text-primary">End user privacy policy</div>
+          <div className="font-bold text-primary">{'<Application Name> terms of service'}</div>
         </div>
       </div>
     </div>
