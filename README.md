@@ -23,7 +23,7 @@ Currently the VCS support retrieving credentials from over 40,000 banks, credit 
 
 ### Data flow
 
-####Pre-Identity hub 
+#### Pre-Identity hub 
 
 VCS sends credentials to VC Issuer.
 
