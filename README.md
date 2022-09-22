@@ -54,6 +54,11 @@ Identity Hub sends VC with the FinTech App.
 `npm run build-client`
 `docker build .`
 
+## How to use
+ - The widget displays the interface of connecting to an institution, it shall be embeded to a webpage and show when needed, to manage the display of the widget, please use the [widget loader](public/static/tbdex-widget-loader.js)
+ - The widget manages the process of creating a connection to selected institution. it doesn't present any data. once the connection is made, either with `onFinish` event handler from browser, or add more logic to the [server handler](server/serviceClients/services.ts#L146)
+ - data retrieval logic is implemented with the vc example, [server code](server/loaderExample.js#L26) and frontend(public/vc.html#L166)
+
 ## FAQ
 
 ### Q: What Verifiable Credential Issuers are currently supported?
