@@ -48,7 +48,8 @@ Identity Hub sends VC with the FinTech App.
 `npm run dev` starts resources server on port 3000
 
 ### local access
-`http://localhost:8080`
+- Widget: `http://localhost:8080`
+- Usage example: `http://localhost/example/vc` -- see below `How to use` section for details about the example
 
 ### build for hosting
 `npm run build-client`
