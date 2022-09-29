@@ -36,29 +36,6 @@ VC Issuer sends a signed VC to the user's Identity Hub.
 
 Identity Hub sends VC with the FinTech App.
 
-
-
-### Install
-`npm install --legacy-peer-deps`
-
-### server
-`npx ts-node server/server.js ` starts server listening on port 8080 and forwards web resource requests to port 3000
-
-### frontend
-`npm run dev` starts resources server on port 3000
-
-### local access
-`http://localhost:8080`
-
-### build for hosting
-`npm run build-client`
-`docker build .`
-
-## How to use
- - The widget displays the interface of connecting to an institution, it shall be embeded to a webpage and show when needed, to manage the display of the widget, please use the [widget loader](public/static/tbdex-widget-loader.js)
- - The widget manages the process of creating a connection to selected institution. it doesn't present any data. once the connection is made, either with `onFinish` event handler from browser, or add more logic to the [server handler](server/serviceClients/services.ts#L146)
- - data retrieval logic is implemented with the vc example, [server code](server/loaderExample.js#L26) and frontend(public/vc.html#L166)
-
 ## FAQ
 
 ### Q: What Verifiable Credential Issuers are currently supported?
@@ -79,3 +56,13 @@ However we expect support for the following soon:
 - Drivers License
 - Passport
 - Birth Certificate
+
+## Project Resources
+
+| Resource                                   | Description                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------ |
+| [CODEOWNERS](./CODEOWNERS)                 | Outlines the project lead(s)                                                   |
+| [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Expected behavior for project contributors, promoting a welcoming environment |
+| [CONTRIBUTING.md](./CONTRIBUTING.md)       | Developer guide to build, test, run, access CI, chat, discuss, file issues     |
+| [GOVERNANCE.md](./GOVERNANCE.md)           | Project governance                                                             |
+| [LICENSE](./LICENSE)                       | Apache License, Version 2.0                                                    |
