@@ -29,7 +29,7 @@ VCS sends credentials to VC Issuer.
 
 VC Issuer returns a signed VC to the FinTech App.
 
-####With Identity Hub 
+#### With Identity Hub 
 VCS sends credentials to VC Issuer.
 
 VC Issuer sends a signed VC to the user's Identity Hub.
