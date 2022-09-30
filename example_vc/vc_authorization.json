@@ -1,0 +1,20 @@
+{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "https://sophtron.com/did/auth/1234",
+    "type": ["VerifiableCredential", "AuthorizationCredential"],
+    "issuer": "https://sophtron.com/issuers/kyc",
+    "issuanceDate": "2022-01-01T19:23:24Z",
+    "credentialSubject": [{
+        "id": "did:example:verifierebfeb1f712ebc6f1c276e12ec21",
+        "verifier": "did:example:verifierebfeb1f712ebc6f1c276e12ec21",
+        "name": "John Example",
+        "resource": "https://sophtron.com/api/userInstittuionAccount/123",
+        "authorizedToken": "IsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19",
+        "tokenExpiration": "2022-03-03T20.20.23Z",
+        "action": "GET",
+        "authorizedAttributeAccess":["bankAccountNumber", "AccountBalance"]
+    }]
+  }

@@ -1,0 +1,52 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "https://did.sophtron.com/vc/transactions/0044c82b-f8a9-4508-921a-e49bff69a705",
+    "type": [
+        "VerifiableCredential",
+        "BankAccountCredential"
+    ],
+    "issuer": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw",
+    "issuanceDate": "2022-04-15T13:33:34.862546655Z",
+    "credentialSubject": {
+        "accounts": [
+            {
+                "accountNumber": "1234",
+                "accountType": "Credit_Card",
+                "accountname": "Credit Card",
+                "availableBalnace": 0,
+                "id": "https://api.sophtron.com/api/userInstituionAccount/48b339c7-2260-4aac-894f-23153e1d2e9b",
+                "routingNumber": null,
+                "status": 1,
+                "transactions": [
+                    {
+                        "amount": 0,
+                        "accountId": "https://api.sophtron.com/api/userInstituionAccount/48b339c7-2260-4aac-894f-23153e1d2e9b",
+                        "category": "Bank fee",
+                        "transactionTimestamp": "2022-04-15T00:00:00",
+                        "postedTimestamp": "2022-04-15T00:00:00",
+                        "description": "Sophtron Fee",
+                        "payee": "merchant",
+                        "status": "posted",
+                        "transactionId": "https://api.sophtron.com/api/userInstituionAccount/8781abd5-9b40-4fd7-8430-a975d0276314",
+                        "transactionType": "Debit"
+                    }
+                ],
+                "updatedDate": "2022-04-15T12:15:15.68"
+            }
+        ],
+        "id": "http://api.sophtron.com/api/userinstitution/0044c82b-f8a9-4508-921a-e49bff69a705",
+        "institution": "Sophtron Bank",
+        "institutionImg": "https://sophtron.com/Images/logo.png",
+        "name": "John Example"
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "2022-04-15T13:33:34Z",
+        "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJraWQiOiJkaWQ6aW9uOkVpRFBiejJ0OWF3NXU4R1JDUnl5WTA5MEdrM3ZTSG1zWkZMWWdWbkJ1ck9NRXcifQ..XAUbbQ7kD2lBNG15GIA_ucoDJztaU-vkr3DV73nDXzWi6cd4VH7EHf8dci2LTaAa-IGqRCJIa0bBZCzEO-7kvA",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw"
+    }
+}

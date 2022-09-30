@@ -1,0 +1,165 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "https://did.sophtron.com/vc/accounts/c92befe5-0ea0-493a-a875-dec4787bf03b",
+    "type": [
+        "VerifiableCredential",
+        "BankAccountCredential"
+    ],
+    "issuer": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw",
+    "issuanceDate": "2022-08-10T01:25:53.665982106Z",
+    "credentialSubject": {
+        "accounts": [
+            {
+                "accountCategory": "DEPOSIT_ACCOUNT",
+                "accountId": "https://api.sophtron.com/api/userInstituionAccount/646f72b3-dedf-423c-b26a-022b408f2443",
+                "accountNumber": "1234",
+                "accountNumberDisplay": "1234",
+                "accountType": "Checking",
+                "availableBalnace": 100,
+                "balanceAsOf": "2022-08-10T01:25:29.54",
+                "balanceType": "ASSET",
+                "currency": {
+                    "currencyCode": "USD"
+                },
+                "currentBalance": 100,
+                "nickname": "Primary Checking",
+                "routingTransitNumber": null,
+                "status": 1,
+                "transactions": [
+                    {
+                        "amount": 0,
+                        "accountId": "https://api.sophtron.com/api/userInstituionAccount/48b339c7-2260-4aac-894f-23153e1d2e9b",
+                        "category": "Bank fee",
+                        "transactionTimestamp": "2022-04-15T00:00:00",
+                        "postedTimestamp": "2022-04-15T00:00:00",
+                        "description": "Sophtron Fee",
+                        "payee": "merchant",
+                        "status": "posted",
+                        "transactionId": "https://api.sophtron.com/api/userInstituionAccount/8781abd5-9b40-4fd7-8430-a975d0276314",
+                        "transactionType": "Debit"
+                    }
+                ],
+                "transferIn": true,
+                "transferOut": true
+            },
+            {
+                "accountCategory": "DEPOSIT_ACCOUNT",
+                "accountId": "https://api.sophtron.com/api/userInstituionAccount/91f1bcd8-a134-4d4b-b6aa-035ba8451256",
+                "accountNumber": "1234",
+                "accountNumberDisplay": "1234",
+                "accountType": "Credit_Card",
+                "availableBalnace": 0,
+                "balanceAsOf": "2022-08-10T01:25:29.54",
+                "balanceType": "ASSET",
+                "currency": {
+                    "currencyCode": ""
+                },
+                "currentBalance": 0,
+                "nickname": "Credit Card",
+                "routingTransitNumber": null,
+                "status": 1,
+                "transactions": [],
+                "transferIn": true,
+                "transferOut": true
+            },
+            {
+                "accountCategory": "DEPOSIT_ACCOUNT",
+                "accountId": "https://api.sophtron.com/api/userInstituionAccount/1dc0ed30-dcc4-4fd4-ac13-242e5fa012f1",
+                "accountNumber": "12345",
+                "accountNumberDisplay": "12345",
+                "accountType": "Insurance",
+                "availableBalnace": 0,
+                "balanceAsOf": "2022-08-10T01:25:29.54",
+                "balanceType": "ASSET",
+                "currency": {
+                    "currencyCode": ""
+                },
+                "currentBalance": 5000,
+                "nickname": "Life Insurance",
+                "routingTransitNumber": null,
+                "status": 1,
+                "transactions": [],
+                "transferIn": true,
+                "transferOut": true
+            },
+            {
+                "accountCategory": "DEPOSIT_ACCOUNT",
+                "accountId": "https://api.sophtron.com/api/userInstituionAccount/a4c2aa8f-4872-44aa-90ea-7be33c2e0207",
+                "accountNumber": "5678",
+                "accountNumberDisplay": "5678",
+                "accountType": "Savings",
+                "availableBalnace": 900,
+                "balanceAsOf": "2022-08-10T01:25:29.54",
+                "balanceType": "ASSET",
+                "currency": {
+                    "currencyCode": ""
+                },
+                "currentBalance": 1000,
+                "nickname": "Savings",
+                "routingTransitNumber": null,
+                "status": 1,
+                "transactions": [],
+                "transferIn": true,
+                "transferOut": true
+            },
+            {
+                "accountCategory": "DEPOSIT_ACCOUNT",
+                "accountId": "https://api.sophtron.com/api/userInstituionAccount/ec53d74d-0caa-4a1b-b65d-b1a867c8ef2f",
+                "accountNumber": "98765",
+                "accountNumberDisplay": "98765",
+                "accountType": "Investment",
+                "availableBalnace": null,
+                "balanceAsOf": "2022-08-10T01:25:29.54",
+                "balanceType": "ASSET",
+                "currency": {
+                    "currencyCode": ""
+                },
+                "currentBalance": 2000,
+                "nickname": "Holdings",
+                "routingTransitNumber": null,
+                "status": 1,
+                "transactions": [],
+                "transferIn": true,
+                "transferOut": true
+            }
+        ],
+        "customer": {
+            "addresses": [
+                {
+                    "line1": null
+                }
+            ],
+            "customerId": "http://api.sophtron.com/api/userinstitution/c92befe5-0ea0-493a-a875-dec4787bf03b",
+            "email": [
+                null
+            ],
+            "name": {
+                "first": null
+            },
+            "telephones": [
+                null
+            ]
+        },
+        "fiAttributes": [
+            {
+                "name": "name",
+                "value": "Sophtron Bank NoMFA"
+            },
+            {
+                "name": "logo",
+                "value": "https://sophtron.com/Images/logo.png"
+            }
+        ],
+        "id": "http://api.sophtron.com/api/userinstitution/c92befe5-0ea0-493a-a875-dec4787bf03b"
+    },
+    "proof": {
+        "type": "JsonWebSignature2020",
+        "created": "2022-08-10T01:25:53Z",
+        "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJraWQiOiJkaWQ6aW9uOkVpRFBiejJ0OWF3NXU4R1JDUnl5WTA5MEdrM3ZTSG1zWkZMWWdWbkJ1ck9NRXcifQ..7ACgjoWwM_OW0g7Jr6XtfSeweNw05l5xWW32SJcFL6dUSUERG6biwzt-GDEMjKDMO7djtiF1_541_GZdWoE_4w",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw"
+    }
+}

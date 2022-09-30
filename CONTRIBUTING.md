@@ -33,15 +33,15 @@ ___***UPDATE TABLE OF PROJECT DEPS AND INSTALLATION NOTES***___
 
 ### local access
 `http://localhost:8080`
+`http://localhost:8080/example/vc`
 
 ### build for hosting
 `npm run build-client`
 `docker build .`
 
 ## How to use
- - The widget displays the interface of connecting to an institution, it shall be embeded to a webpage and show when needed, to manage the display of the widget, please use the [widget loader](public/static/tbdex-widget-loader.js)
- - The widget manages the process of creating a connection to selected institution. it doesn't present any data. once the connection is made, either with `onFinish` event handler from browser, or add more logic to the [server handler](server/serviceClients/services.ts#L146)
- - data retrieval logic is implemented with the vc example, [server code](server/loaderExample.js#L26) and frontend(public/vc.html#L166)
+- The widget displays the user interface to let users: select their bank, enter the required credentials (including MFA), and get confirmation once the VC that is digitally signed by the Verifiable Credential Issuers is available. The widget can be embedded into a web page as an iframe. To see an example of how to display the widget, please refer to the example [widget loader](public/static/tbdex-widget-loader.js)
+- The widget confirms that the VC that is digitally signed by the Verifiable Credential Issuers is available to the end user. The schemas of different types of VCs can be found [here](example_vc/), To see an example of how to currently retrieve VC and display it, please refer to example [here](public/vc.html) 
 
 ## Communications
 

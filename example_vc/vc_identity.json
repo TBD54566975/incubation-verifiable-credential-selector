@@ -1,0 +1,50 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "https://did.sophtron.com/vc/identity/bb52199d-8204-4b80-ab9d-89a2a3c34eff",
+  "type": [
+    "VerifiableCredential",
+    "IdentityCredential"
+  ],
+  "issuer": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw",
+  "issuanceDate": "2022-08-10T01:22:21.176167318Z",
+  "credentialSubject": {
+    "customer": {
+      "addresses": [
+        {
+          "line1": "no 1 example street"
+        }
+      ],
+      "customerId": "http://api.sophtron.com/api/userinstitution/bb52199d-8204-4b80-ab9d-89a2a3c34eff",
+      "email": [
+        "vs@example.com"
+      ],
+      "name": {
+        "first": "example"
+      },
+      "telephones": [
+        null
+      ]
+    },
+    "fiAttributes": [
+      {
+        "name": "name",
+        "value": "Sophtron Bank NoMFA"
+      },
+      {
+        "name": "logo",
+        "value": "https://sophtron.com/Images/logo.png"
+      }
+    ],
+    "id": "http://api.sophtron.com/api/userinstitution/bb52199d-8204-4b80-ab9d-89a2a3c34eff"
+  },
+  "proof": {
+    "type": "JsonWebSignature2020",
+    "created": "2022-08-10T01:22:21Z",
+    "jws": "eyJhbGciOiJFUzI1NksiLCJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJraWQiOiJkaWQ6aW9uOkVpRFBiejJ0OWF3NXU4R1JDUnl5WTA5MEdrM3ZTSG1zWkZMWWdWbkJ1ck9NRXcifQ..SABzBLGtpsIlNnOJFlvg8b5jiXoiMVHVspZ8NleFKpbBmyT0BHdhTPXZYaP7G7zh1MpDg-W0vOcZhZZmVWCjNg",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:ion:EiDPbz2t9aw5u8GRCRyyY090Gk3vSHmsZFLYgVnBurOMEw"
+  }
+}
