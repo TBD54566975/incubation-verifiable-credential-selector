@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://localhost:8080/vc_identity.json",
+  "title": "Banking VC - Identity",
+  "description": "Identity schema of banking verifiable credentials",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "",
+      "type": "string"
+    },
+    "fiAttributes": {
+      "$ref": "common.json#/definitions/FinancialInstitution"
+    },
+    "customer": {
+      "$ref": "common.json#/definitions/Customer"
+    }
+  },
+  "additionalProperties": false,
+  "minProperties": 3
+}

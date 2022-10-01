@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.sophtron.com/schema/draft/vc/bankaccounts.json",
+  "title": "Banking VC - BankAccounts",
+  "description": "List of accounts schema of banking verifiable credentials",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "",
+      "type": "string"
+    },
+    "fiAttributes": {
+      "$ref": "common.json#/definitions/FinancialInstitution"
+    },
+    "customer": {
+      "$ref": "common.json#/definitions/Customer"
+    },
+    "accounts": {
+      "type": "array",
+      "items":{
+        "$ref": "common.json#/definitions/BankAccount"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "minProperties": 4
+}

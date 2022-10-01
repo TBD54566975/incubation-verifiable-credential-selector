@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.sophtron.com/schema/draft/vc/common.json",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "Customer": {
+      "type": "object",
+      "description": "The customer/user information linked to the accounts",
+      "properties": {
+        "customerId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "first": { "type":  ["string", "null"] },
+            "middle": { "type":  ["string", "null"] },
+            "last": { "type":  ["string", "null"] },
+            "suffix": { "type":  ["string", "null"] }
+          }
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type":  ["string", "null"]
+          }
+        },
+        "telephones": {
+          "type": "array",
+          "items": {
+            "type":  ["string", "null"]
+          }
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line1": { "type":  ["string", "null"] },
+              "line2": { "type":  ["string", "null"] },
+              "line3": { "type":  ["string", "null"] },
+              "city": { "type":  ["string", "null"] },
+              "state": { "type":  ["string", "null"] },
+              "region": { "type":  ["string", "null"] },
+              "postalCode": { "type":  ["string", "null"] },
+              "country": { "type":  ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "FinancialInstitution":{
+      "type": "object",
+      "properties":{
+        "name": { "type": "string" },
+        "logo_url": { "type": "string" },
+        "url": { "type": "string" }
+      },
+      "required": ["name", "logo_url"]
+    },
+    "BankTransaction": {
+      "type": "object",
+      "description": "Bank transaction entity",
+      "properties":{
+        "amount": { 
+          "type": "number", 
+          "multipleOf": 0.01 
+        },
+        "accountId": { "type": "string" },
+        "category": { "type": "string" },
+        "transactionTimestamp": { "type": "string", "format": "date" },
+        "postedTimestamp": { "type": "string", "format": "date" },
+        "description": { "type": "string" },
+        "payee": { "type": "string" },
+        "status": { "type": "string" },
+        "transactionId": { "type": "string" },
+        "transactionType": { 
+          "type": "string", 
+          "description": "e.g.: Debit, Credit"
+        }
+      }
+    },
+    "BankAccount": {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "description": "e.g.: DEPOSIT_ACCOUNT"
+        },
+        "accountId": { "type": "string" },
+        "accountNumber": {
+          "type": "string",
+          "description": "The full account number"
+        },
+        "accountNumberDisplay": {
+          "type": "string",
+          "description": "Account number masked for displaying"
+        },
+        "accountType": {
+          "type": "string",
+          "description": "e.g.: Checking"
+        },
+        "availableBalnace": { 
+          "type": "number", 
+          "multipleOf": 0.01 
+        },
+        "balanceAsOf": { "type": "string", "format": "date" },
+        "balanceType": {
+          "type": "string",
+          "description": "e.g.: ASSET"
+        },
+        "currency": {
+          "type:": "object",
+          "properties": {
+            "currencyCode": {
+              "type": "string"
+            }
+          }
+        },
+        "currentBalance": { 
+          "type": "number", 
+          "multipleOf": 0.01 
+        },
+        "nickname": { "type": "string" },
+        "routingTransitNumber":  { "type": "string" },
+        "status":  { "type": "string" },
+        "transactions": {
+          "type": "array",
+          "items":{
+            "$ref": "#/definitions/BankTransaction"
+          }
+        },
+        "transferIn": { "type": "boolean" },
+        "transferOut": { "type": "boolean" }
+      }
+    }
+  }
+}

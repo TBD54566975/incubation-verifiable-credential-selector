@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.sophtron.com/schema/draft/vc/authorization.json",
+  "title": "Banking VC Authorization",
+  "description": "Authorization schema of banking verifiable credentials",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the subject",
+      "type": "string"
+    },
+    "verifier": {
+      "description": "The credential verifier unique id in distributed netwrok",
+      "type": "string"
+    },
+    "resource": {
+      "description": "the link to the resource that's being authorized to access",
+      "type": "string"
+    },
+    "authorizedToken": {
+      "description": "A short lived token for validating the authorization",
+      "type": "string"
+    },
+    "tokenExpiration": {
+      "description": "The expiration time of the token",
+      "type": "string"
+    },
+    "actions": {
+      "description": "The authorized actions that can be taken",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description" : "the actions allowed, e.g. 'read', 'write', 'delete'"
+      } 
+    },
+    "authorizedAttributeAccess": {
+      "description": "The attribuet of the resource that this authorization includes",
+      "type": "array",
+      "items":{
+        "type": "string",
+        "description": "The name of the object attribute"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "minProperties": 8
+}

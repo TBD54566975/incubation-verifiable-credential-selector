@@ -1,0 +1,10 @@
+{
+  "id": "did:example:verifierebfeb1f712ebc6f1c276e12ec21",
+  "verifier": "did:example:verifierebfeb1f712ebc6f1c276e12ec21",
+  "name": "John Example",
+  "resource": "https://sophtron.com/api/userInstittuionAccount/123",
+  "authorizedToken": "IsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19",
+  "tokenExpiration": "2022-03-03T20.20.23Z",
+  "actions": ["GET"],
+  "authorizedAttributeAccess":["bankAccountNumber", "AccountBalance"]
+}

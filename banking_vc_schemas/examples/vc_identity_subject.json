@@ -1,0 +1,24 @@
+{
+  "customer": {
+    "addresses": [
+      {
+        "line1": "no 1 example street"
+      }
+    ],
+    "customerId": "http://api.sophtron.com/api/userinstitution/bb52199d-8204-4b80-ab9d-89a2a3c34eff",
+    "email": [
+      "vs@example.com"
+    ],
+    "name": {
+      "first": "example"
+    },
+    "telephones": [
+      null
+    ]
+  },
+  "fiAttributes": {
+    "name": "Sophtron Bank",
+    "logo_url": "https://sophtron.com/Images/logo.png"
+  },
+  "id": "http://api.sophtron.com/api/userinstitution/bb52199d-8204-4b80-ab9d-89a2a3c34eff"
+}
