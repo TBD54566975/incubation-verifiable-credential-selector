@@ -184,7 +184,7 @@ export class SophtronApi implements ProviderApiClient {
 
   async SearchInstitutions(name: string): Promise<Institutions> {
     const ret = await this.httpClient.wget(
-      `${config.AutoSuggestEndpoint}?term=${name}`
+      `${config.AutoSuggestEndpoint}?term=${encodeURIComponent(name)}`
     );
     // console.log(ret);
     return {
