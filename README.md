@@ -1,6 +1,6 @@
 # Verifiable Credential Selector (VCS)
 
-Developers embed the VCS into their application to allow users select and retrieve VCs. 
+Developers embed the VCS into their application to allow users to select and retrieve Verifiable Credentials (VCs). 
 
 For example a developer building an application to allow users to purchase bitcoin may want the users to obtain a VC containing KYC data or a VC containing the account number and routing number of the users bank account that will be used to pay for the bitcoin purchase.
 
