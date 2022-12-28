@@ -1,9 +1,9 @@
 import type {
   Challenge,
+  Connection,
   Context,
   Institution,
   ProviderApiClient,
-  Connection,
 } from '../../shared/contract';
 import * as config from '../config';
 import * as logger from '../infra/logger';
@@ -57,7 +57,10 @@ export async function search(query: string, _: Context) {
   list.institutions = list.institutions.map(mapProvider);
   return list;
 }
-export async function getConnection(connection_id: string, context: Context) : Promise<Connection>{
+export function getConnection(
+  connection_id: string,
+  context: Context
+): Promise<Connection> {
   const client = getApiClient(context);
   return client.GetConnectionById(connection_id);
 }
