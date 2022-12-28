@@ -4,7 +4,7 @@ Developers embed the VCS into their application to allow users select and retrie
 
 For example a developer building an application to allow users to purchase bitcoin may want the users to obtain a VC containing KYC data or a VC containing the account number and routing number of the users bank account that will be used to pay for the bitcoin purchase.
 
-By presenting this widget at the appropriate step in the onboarding process the user can select their bank account, provide the required credentials (including MFA) and obtain a VC that is digitally signed by the Verifiable Credential Issuers.
+By presenting this widget at the appropriate step in the onboarding process the user can select their bank account, provide the required credentials (including MFA) and obtain a VC that is digitally signed by the Verifiable Credential Issuers - See [Example](vc_issuer_example/README.md).
 
 The VCS is Free Open Source Software and is part of the Block TBD Incubation Initiative.
 

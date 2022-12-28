@@ -20,7 +20,8 @@ ___***UPDATE TABLE OF PROJECT DEPS AND INSTALLATION NOTES***___
 | Node        | v17.8.0        |                                                      |
 | Nextjs      | v12.2.5        |                                                      |
 
-
+### Working directory 
+`application`
 
 ### Install
 `npm install --legacy-peer-deps`
@@ -32,8 +33,8 @@ ___***UPDATE TABLE OF PROJECT DEPS AND INSTALLATION NOTES***___
 `npm run dev` starts resources server on port 3000
 
 ### local access
-`http://localhost:8080`
-`http://localhost:8080/example/vc`
+`http://localhost:8080` - For VCS widget
+`http://localhost:8080/example/vc`- For embeded example with demo VC issuing work flow
 
 ### build for hosting
 `npm run build-client`
