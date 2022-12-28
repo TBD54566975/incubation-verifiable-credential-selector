@@ -34,11 +34,10 @@ const BankLoginScreen: React.FC = () => {
           connection_id: (connection_id as string) || '',
         })
       );
-    }
-    if (request && bankId && credentials.length === 0) {
+    }else if (request && (request.institution_id || bankId) && credentials.length === 0) {
       dispatch(
         selectInstitutionAsync({
-          instituion: { id: bankId as string, name: '', logo_url: '', url: '' },
+          instituion: { id: (request.institution_id || bankId) as string, name: '', logo_url: '', url: '' },
           navigate: false,
         })
       );

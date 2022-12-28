@@ -3,6 +3,7 @@ import type {
   Context,
   Institution,
   ProviderApiClient,
+  Connection,
 } from '../../shared/contract';
 import * as config from '../config';
 import * as logger from '../infra/logger';
@@ -55,6 +56,10 @@ export async function search(query: string, _: Context) {
   const list = await client.SearchInstitutions(query);
   list.institutions = list.institutions.map(mapProvider);
   return list;
+}
+export async function getConnection(connection_id: string, context: Context) : Promise<Connection>{
+  const client = getApiClient(context);
+  return client.GetConnectionById(connection_id);
 }
 export async function institutions(context: Context) {
   // const client = getApiClient(context);

@@ -143,6 +143,7 @@ export class MxApi implements ProviderApiClient {
     const member = res.data.member!;
     return {
       id: member.guid!,
+      institution_code: member.institution_code
     };
   }
 

@@ -31,7 +31,7 @@ if (config.env !== 'prod') {
 
 Object.keys(api).forEach((key) => {
   app.post(`/api/${key}`, contextHandler, (req, res) => {
-    // console.log(req.context);
+    console.log(req.body);
     const promise = api[key](req, res);
     logger.info(`Api request handler invoked: ${req.path}`);
     if (promise.catch) {

@@ -300,6 +300,7 @@ export class SophtronApi implements ProviderApiClient {
     const uins = await this.apiClient.getUserInstitutionById(connectionId);
     return {
       id: uins.UserInstitutionID,
+      institution_code: uins.InstitutionID
     };
   }
 

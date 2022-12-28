@@ -1,9 +1,15 @@
 const service = require('./serviceClients/services.ts');
 
 module.exports = {
-  context(req, res) {
+  async context(req, res) {
     res.context = req.body;
     res.context.job_type = res.context.job_type || 'agg';
+    if(res.context.connection_id){
+      let conn = await service.getConnection(res.context.connection_id);
+      if(conn){
+        res.context.institution_id = conn.institution_code;
+      }
+    }
     res.send(req.body);
     return {};
   },
