@@ -111,6 +111,10 @@ export class MxApi implements ProviderApiClient {
     };
   }
 
+  async DeleteConnection(id: string, userId: string): Promise<void> {
+    await this.apiClient.deleteManagedMember(id, userId);
+  }
+
   async UpdateConnection(
     request: UpdateConnectionRequest,
     userId: string

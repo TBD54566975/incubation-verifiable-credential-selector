@@ -33,6 +33,7 @@
                     <div class="image-container2">
                         <img class="check" src="/static/check.png"> This certificate is valid.
                     </div>
+                    <a class="link" download="identity.vc" v-bind:href="downloadHrefIdentity">Download</a>
                     <a class="link" @click="identityToggleDetails">Details</a>
                 </div>
                 <div class="carde" v-if="identityVc.show && identityVc.detail">
@@ -57,6 +58,7 @@
                     <div class="image-container2">
                         <img class="check" src="/static/check.png"> This certificate is valid.
                     </div>
+                    <a class="link" download="banking.vc" v-bind:href="downloadHrefBanking">Download</a>
                     <a class="link" @click="bankingToggleDetails">Details</a>
                 </div>
                 <div class="carde" v-if="bankingVc.show && bankingVc.detail">
@@ -75,21 +77,28 @@
       
         Vue.createApp({
             data() {
-                return {
-                    connection: '',
-                    bankingFinished: false,
-                    identityFinished: false,
-                    bankingVc: {
-                        show: false, 
-                        detail: false,
-                        obj: null
-                    },
-                    identityVc: {
-                        show: false, 
-                        detail: false,
-                        obj: null
-                    }
-                }
+              let test = false;
+              const minimalVcMock = {
+                        credentialSubject: {
+                          fiAttributes:[{}, {}],
+                          customer:{name:{}}
+                        }
+                      };
+              return {
+                  connection: 'test',
+                  bankingFinished: test,
+                  identityFinished: test,
+                  bankingVc: {
+                      show: false, 
+                      detail: false,
+                      obj: test ? minimalVcMock: null
+                  },
+                  identityVc: {
+                      show: test, 
+                      detail: false,
+                      obj: test ? minimalVcMock: null
+                  }
+              }
             },
             mounted(){
                 window.demoApp = this;
@@ -100,6 +109,12 @@
                 },
                 bankingVcJson(){
                     return JSON.stringify(this.bankingVc.obj, null, 2)
+                },
+                downloadHrefIdentity(){
+                    return 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.identityVcJson);
+                },
+                downloadHrefBanking(){
+                  return 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.bankingVcJson);
                 },
                 bankingVcLatestAccount(){
                     return this.bankingVc.obj.credentialSubject.accounts.sort(function(a,b){

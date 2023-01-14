@@ -19,6 +19,9 @@ const uuid =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
 function fromSophtronInstitution(ins: any): Institution {
+  if(!ins){
+    return;
+  }
   return {
     id: ins.InstitutionID,
     logo_url: ins.Logo,
@@ -178,6 +181,11 @@ export class SophtronApi implements ProviderApiClient {
   }
 
   async GetInstitutionById(id: string): Promise<Institution> {
+    if (!uuid.test(id)) {
+      const name = id;
+      const res = await this.apiClient.getInstitutionsByName(name);
+      return fromSophtronInstitution(res?.[0]);
+    }
     const ins = await this.apiClient.getInstitutionById(id);
     return fromSophtronInstitution(ins);
   }
@@ -198,17 +206,25 @@ export class SophtronApi implements ProviderApiClient {
     };
   }
 
-  ListInstitutionCredentials(): Promise<Array<Credential>> {
-    return Promise.resolve([
+  async ListInstitutionCredentials(id: string): Promise<Array<Credential>> {
+    let ins;
+    if (!uuid.test(id)) {
+      const name = id;
+      const res = await this.apiClient.getInstitutionsByName(name);
+      ins = res?.[0];
+    }else{
+      ins = await this.apiClient.getInstitutionById(id);
+    }
+    return [
       {
         id: 'username',
-        label: 'User name',
+        label: ins?.InstitutionDetail?.LoginFormUserName || 'User name',
       },
       {
         id: 'password',
-        label: 'Password',
+        label: ins?.InstitutionDetail?.LoginFormPassword || 'Password',
       },
-    ]);
+    ];
   }
 
   async CreateConnection(
@@ -275,6 +291,10 @@ export class SophtronApi implements ProviderApiClient {
       };
     }
     return undefined;
+  }
+
+  async DeleteConnection(id: string): Promise<void> {
+    return this.apiClient.deleteUserInstitution(id);
   }
 
   async UpdateConnection(

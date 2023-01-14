@@ -114,16 +114,13 @@ export const initAsync = createAsyncThunk<
   InitialRequest | undefined,
   { query: ParsedUrlQuery; connection_id?: string | undefined },
   { state: RootState }
->('institution/init', async ({ query, connection_id }, { dispatch }) => {
-  const { provider, institution_id, user_id, job_type } = query;
+>('institution/init', async ({ query }, { dispatch }) => {
+  const { provider, institution_id, bankId, user_id, job_type, connection_id} = query;
   const res = await api.context({
-    connection_id:
-      connection_id === ''
-        ? connection_id
-        : connection_id || (query.connection_id as string),
+    connection_id: connection_id as string,
     provider: provider as string,
     job_type: job_type as string,
-    institution_id: institution_id as string,
+    institution_id: (bankId || institution_id) as string,
     user_id: user_id as string,
   });
   if (checkError(res as WidgetError, dispatch)) {

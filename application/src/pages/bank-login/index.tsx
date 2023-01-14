@@ -23,26 +23,24 @@ const BankLoginScreen: React.FC = () => {
     (state) => state.instituion!
   );
   useEffect(() => {
-    const { bankId, connection_id } = router.query;
+    const { connection_id } = router.query;
     if (
       (!request || request.connection_id !== (connection_id as string)) &&
       router.isReady
     ) {
       dispatch(
         initAsync({
-          query: router.query,
-          connection_id: (connection_id as string) || '',
+          query: router.query
         })
       );
     } else if (
-      request &&
-      (request.institution_id || bankId) &&
+      request?.institution_id &&
       credentials.length === 0
     ) {
       dispatch(
         selectInstitutionAsync({
           instituion: {
-            id: (request.institution_id || bankId) as string,
+            id: request.institution_id as string,
             name: '',
             logo_url: '',
             url: '',

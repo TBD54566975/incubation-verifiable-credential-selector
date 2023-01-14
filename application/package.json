@@ -9,7 +9,7 @@
     "export": "next export",
     "build-client": "run-s clean build export",
     "clean": "rimraf .next out",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "check-types": "tsc --noEmit --pretty",
     "test": "jest",
     "cypress": "cypress open",

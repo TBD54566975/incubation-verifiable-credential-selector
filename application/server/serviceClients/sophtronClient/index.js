@@ -24,6 +24,11 @@ module.exports = {
   getUserInstitutionsByUser(id) {
     return post('/UserInstitution/GetUserInstitutionsByUser', { UserID: id });
   },
+  deleteUserInstitution(id) {
+    return post('/UserInstitution/DeleteUserInstitution', {
+      UserInstitutionID: id,
+    });
+  },
   getUserInstitutionAccounts(userInstitutionID) {
     return post('/UserInstitution/GetUserInstitutionAccounts', {
       UserInstitutionID: userInstitutionID,
@@ -46,8 +51,8 @@ module.exports = {
         Extensive: true,
         InstitutionType: 'All',
       });
-      if ((data || []).length > 0) {
-        return data.slice(0, 9);
+      if (data?.length > 0) {
+        return data.sort((a,b) => a.InstitutionName.length - b.InstitutionName.length).slice(0, 9);
       }
       return data;
     }

@@ -139,6 +139,7 @@ export interface ProviderApiClient {
     connection: CreateConnectionRequest,
     userId?: string
   ): Promise<Connection | undefined>;
+  DeleteConnection(connectionId: string, userId?: string): Promise<void>;
   AnswerChallenge(
     request: UpdateConnectionRequest,
     userId?: string

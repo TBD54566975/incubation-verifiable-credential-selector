@@ -190,6 +190,7 @@ const config = {
   AutoSuggestEndpoint: 'https://sophtron-prod.com/autoSuggest',
   ApiServiceEndpoint: 'https://api.sophtron-prod.com/api',
   DidDemoServiceEndpoint: 'https://did.sophtron-prod.com/api/',
+  Demo: true,
   LogLevel: 'debug',
   Port: '8080',
   Env: 'dev', // mocked

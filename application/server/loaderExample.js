@@ -14,6 +14,13 @@ const asyncHandler = (fn) => (req, res, next) => {
     res.send('Unexpected error, please refresh the page and try agin');
   });
 };
+async function clearConnection(vc, id) {
+  if (config.Demo && vc.issuer) {
+    // a valid vc should have an issuer field. this means we have a successful response,
+    // once a VC is sccessfully returned to user, we clear the connection for data safty
+    sophtronClient.deleteUserInstitution(id);
+  }
+}
 module.exports = async function (app) {
   app.get(
     '/example/did/vc/identity/:provider/:id',
@@ -24,12 +31,17 @@ module.exports = async function (app) {
           await http
             .post(
               `${config.DidDemoServiceEndpoint}vc/identity/${req.params.id}`,
-              null,
+              {
+                masks: {
+                  identity: ['name'],
+                },
+              },
               await getIntegrationKey()
             )
             .then((data) => {
               res.setHeader('content-type', 'application/json');
               res.send(data);
+              clearConnection(data, req.params.id);
             });
         } else {
           res.status(404).send('invalid id');
@@ -53,6 +65,7 @@ module.exports = async function (app) {
             .then((data) => {
               res.setHeader('content-type', 'application/json');
               res.send(data);
+              clearConnection(data, req.params.id);
             });
         } else {
           res.status(404).send('invalid id');
