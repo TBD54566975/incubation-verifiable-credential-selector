@@ -10,6 +10,9 @@ const sophtron = (function () {
   const defaultConf = {
     env: 'local',
     jobType: 'agg',
+    user_id: null,
+    connection_id: null,
+    bank_id: null,
     provider: null,
     onInit: null,
     onShow: null,
@@ -148,7 +151,16 @@ const sophtron = (function () {
       console.log(Object.keys(urls));
       throw Error(`Invalid env ${conf.env}`);
     }
-    const ret = `${url}/?job_type=${conf.jobType}`;
+    let ret = `${url}/?job_type=${conf.jobType}`;
+    if(conf.connection_id){
+      ret += `&connection_id=${conf.connection_id}`
+    }else if(conf.bank_id){
+      ret += `&bankId=${encodeURIComponent(conf.bank_id)}`
+    }
+
+    if(conf.user_id){
+      ret += `&user_id=${encodeURIComponent(conf.user_id)}`
+    }
     // let ret= `${url}/${conf.partner}/${action}?integration_key=${conf.integration_key || '' }&request_id=${conf.request_id || ''}`;
     // if(action == 'Refresh'){
     //     if(conf.userInstitution_id ){

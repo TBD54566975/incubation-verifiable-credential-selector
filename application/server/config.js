@@ -187,9 +187,9 @@ const demoBanks = [
 ];
 
 const config = {
-  AutoSuggestEndpoint: 'https://sophtron-prod.com/autoSuggest',
-  ApiServiceEndpoint: 'https://api.sophtron-prod.com/api',
-  DidDemoServiceEndpoint: 'https://did.sophtron-prod.com/api/',
+  SophtronAutoSuggestEndpoint: 'https://sophtron-prod.com/autoSuggest',
+  SophtronApiServiceEndpoint: 'https://api.sophtron-prod.com/api',
+  SophtronVCServiceEndpoint: 'https://vc.sophtron-prod.com/api/',
   Demo: true,
   LogLevel: 'debug',
   Port: '8080',

@@ -30,13 +30,10 @@ const BankLoginScreen: React.FC = () => {
     ) {
       dispatch(
         initAsync({
-          query: router.query
+          query: router.query,
         })
       );
-    } else if (
-      request?.institution_id &&
-      credentials.length === 0
-    ) {
+    } else if (request?.institution_id && credentials.length === 0) {
       dispatch(
         selectInstitutionAsync({
           instituion: {

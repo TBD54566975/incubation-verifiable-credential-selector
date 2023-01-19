@@ -1,9 +1,11 @@
-import type {
+import {
   Challenge,
   Connection,
+  ConnectionStatus,
   Context,
   Institution,
   ProviderApiClient,
+  VcType,
 } from '../../shared/contract';
 import * as config from '../config';
 import * as logger from '../infra/logger';
@@ -154,6 +156,42 @@ export async function mfa(job_id: string, context: Context) {
     return { error: 'Failed to find job' };
   }
   res.provider = context.provider;
+  if (res.status === ConnectionStatus.CONNECTED) {
+    if (
+      context.job_type?.startsWith('vc_') &&
+      context.user_id.startsWith('did:')
+    ) {
+      // notify vc service about a connection that belongs to the user_id
+      let vcType = VcType.IDENTITY;
+      switch (context.job_type) {
+        case 'vc_accounts':
+        case 'vc_account':
+          vcType = VcType.ACCOUNTS;
+          break;
+        case 'vc_transactions':
+        case 'vc_transaction':
+          vcType = VcType.TRANSACTIONS;
+          break;
+        default:
+          break;
+      }
+      for (let i = 0; i < 3; i++) {
+        try {
+          /* eslint-disable no-await-in-loop */
+          const vc = await this.getVC(res.id, vcType, context);
+          res.vc = Buffer.from(JSON.stringify(vc)).toString('base64');
+          /* eslint-disable no-await-in-loop */
+          return res;
+        } catch (err) {
+          logger.error(`Failed to retrieve VC`, err);
+        }
+        logger.error(`Retrying vc retrieval`);
+        await new Promise((resolve, _) => {
+          setTimeout(resolve, 500);
+        });
+      }
+    }
+  }
   return res;
 }
 export async function answerChallenge(
@@ -168,4 +206,8 @@ export async function answerChallenge(
     },
     context.user_id
   );
+}
+export function getVC(connection_id: string, type: VcType, context: Context) {
+  const client = getApiClient(context);
+  return client.GetVc(connection_id, type, context?.user_id);
 }

@@ -1,14 +1,16 @@
-import type {
+import {
   Challenge,
+  ChallengeType,
   Connection,
+  ConnectionStatus,
   CreateConnectionRequest,
   Credential,
   Institution,
   Institutions,
   ProviderApiClient,
   UpdateConnectionRequest,
+  VcType,
 } from '@/../../shared/contract';
-import { ChallengeType, ConnectionStatus } from '@/../../shared/contract';
 
 import * as config from '../../config';
 import * as logger from '../../infra/logger';
@@ -18,9 +20,17 @@ import * as client from '../sophtronClient';
 const uuid =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-function fromSophtronInstitution(ins: any): Institution {
-  if(!ins){
-    return;
+async function clearConnection(vc: any, id: string) {
+  if (config.Demo && vc.issuer) {
+    // a valid vc should have an issuer field. this means we have a successful response,
+    // once a VC is sccessfully returned to user, we clear the connection for data safty
+    client.deleteUserInstitution(id);
+  }
+}
+
+function fromSophtronInstitution(ins: any): Institution | undefined {
+  if (!ins) {
+    return undefined;
   }
   return {
     id: ins.InstitutionID,
@@ -192,7 +202,7 @@ export class SophtronApi implements ProviderApiClient {
 
   async SearchInstitutions(name: string): Promise<Institutions> {
     const ret = await this.httpClient.wget(
-      `${config.AutoSuggestEndpoint}?term=${encodeURIComponent(name)}`
+      `${config.SophtronAutoSuggestEndpoint}?term=${encodeURIComponent(name)}`
     );
     // console.log(ret);
     return {
@@ -212,7 +222,7 @@ export class SophtronApi implements ProviderApiClient {
       const name = id;
       const res = await this.apiClient.getInstitutionsByName(name);
       ins = res?.[0];
-    }else{
+    } else {
       ins = await this.apiClient.getInstitutionById(id);
     }
     return [
@@ -256,6 +266,8 @@ export class SophtronApi implements ProviderApiClient {
       case 'utils':
       case 'util':
       case 'demo':
+      case 'vc_transactions':
+      case 'vc_transaction':
         ret = await this.apiClient.CreateUserInstitutionWithRefresh(
           username,
           password,
@@ -265,6 +277,8 @@ export class SophtronApi implements ProviderApiClient {
       case 'auth':
       case 'bankauth':
       case 'verify':
+      case 'vc_account':
+      case 'vc_accounts':
         ret = await this.apiClient.CreateUserInstitutionWithFullAccountNumbers(
           username,
           password,
@@ -272,6 +286,7 @@ export class SophtronApi implements ProviderApiClient {
         );
         break;
       case 'identify':
+      case 'vc_identity':
         ret = await this.apiClient.CreateUserInstitutionWithProfileInfo(
           username,
           password,
@@ -424,5 +439,52 @@ export class SophtronApi implements ProviderApiClient {
         return false;
     }
     return true;
+  }
+
+  async GetVc(
+    connection_id: string,
+    type: VcType,
+    userId?: string
+  ): Promise<object> {
+    const key = (await this.apiClient.getUserIntegrationKey()).IntegrationKey;
+    let path = '';
+    let body = null as any;
+    switch (type) {
+      case VcType.IDENTITY:
+        path = 'identity';
+        body = {
+          masks: {
+            identity: ['name'],
+          },
+        };
+        break;
+      case VcType.ACCOUNTS:
+        path = 'accounts';
+        break;
+      case VcType.TRANSACTIONS:
+        path = 'transactions';
+        break;
+      default:
+        break;
+    }
+    if (path) {
+      const headers = { IntegrationKey: key } as any;
+      if (userId) {
+        headers.DidAuth = userId;
+      }
+      const ret = await http
+        .post(
+          `${config.SophtronVCServiceEndpoint}vc/${path}/${connection_id}`,
+          body,
+          headers
+        )
+        .then((vc: any) => {
+          // for data security purpose when doing demo, remove the connection once vc is returned to client.
+          clearConnection(vc, connection_id);
+          return vc;
+        });
+      return ret;
+    }
+    return null;
   }
 }

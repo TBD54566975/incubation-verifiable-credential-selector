@@ -29,6 +29,6 @@ RUN npm install ts-node -g
 ENV Env prod
 
 EXPOSE 8080
-ENTRYPOINT ["npx","concurrently","ts-node ./server/server.js","next start"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 #CMD [ "ts-node", "./server/server.js" ]

@@ -115,7 +115,8 @@ export const initAsync = createAsyncThunk<
   { query: ParsedUrlQuery; connection_id?: string | undefined },
   { state: RootState }
 >('institution/init', async ({ query }, { dispatch }) => {
-  const { provider, institution_id, bankId, user_id, job_type, connection_id} = query;
+  const { provider, institution_id, bankId, user_id, job_type, connection_id } =
+    query;
   const res = await api.context({
     connection_id: connection_id as string,
     provider: provider as string,

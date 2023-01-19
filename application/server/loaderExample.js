@@ -1,12 +1,10 @@
+const { VcType } = require('../shared/contract.ts');
+
 const http = require('./serviceClients/http');
 const config = require('./config');
-const sophtronClient = require('./serviceClients/sophtronClient');
 const logger = require('./infra/logger');
+const service = require('./serviceClients/services.ts');
 
-async function getIntegrationKey() {
-  const ret = (await sophtronClient.getUserIntegrationKey()).IntegrationKey;
-  return { IntegrationKey: ret };
-}
 const asyncHandler = (fn) => (req, res, next) => {
   return Promise.resolve(fn(req, res, next)).catch((err) => {
     logger.error('Error making example did-vc', err);
@@ -14,35 +12,24 @@ const asyncHandler = (fn) => (req, res, next) => {
     res.send('Unexpected error, please refresh the page and try agin');
   });
 };
-async function clearConnection(vc, id) {
-  if (config.Demo && vc.issuer) {
-    // a valid vc should have an issuer field. this means we have a successful response,
-    // once a VC is sccessfully returned to user, we clear the connection for data safty
-    sophtronClient.deleteUserInstitution(id);
-  }
-}
 module.exports = async function (app) {
   app.get(
-    '/example/did/vc/identity/:provider/:id',
+    '/example/did/vc/identity/:provider/:id/:userId?',
     asyncHandler(async (req, res) => {
-      console.log(req.params);
+      const { userId, id } = req.params;
       if (req.params.provider === 'sophtron') {
-        if (req.params.id) {
-          await http
-            .post(
-              `${config.DidDemoServiceEndpoint}vc/identity/${req.params.id}`,
-              {
-                masks: {
-                  identity: ['name'],
-                },
-              },
-              await getIntegrationKey()
-            )
-            .then((data) => {
-              res.setHeader('content-type', 'application/json');
-              res.send(data);
-              clearConnection(data, req.params.id);
-            });
+        if (id) {
+          const data = await service.getVC(
+            id,
+            VcType.IDENTITY,
+            userId
+              ? {
+                user_id: userId,
+              }
+              : null
+          );
+          res.setHeader('content-type', 'application/json');
+          res.send(data);
         } else {
           res.status(404).send('invalid id');
         }
@@ -52,21 +39,22 @@ module.exports = async function (app) {
     })
   );
   app.get(
-    '/example/did/vc/banking/:provider/:id',
+    '/example/did/vc/banking/:provider/:id/:userId?',
     asyncHandler(async (req, res) => {
+      const { userId, id } = req.params;
       if (req.params.provider === 'sophtron') {
-        if (req.params.id) {
-          await http
-            .post(
-              `${config.DidDemoServiceEndpoint}vc/accounts/${req.params.id}`,
-              null,
-              await getIntegrationKey()
-            )
-            .then((data) => {
-              res.setHeader('content-type', 'application/json');
-              res.send(data);
-              clearConnection(data, req.params.id);
-            });
+        if (id) {
+          const data = await service.getVC(
+            id,
+            VcType.ACCOUNTS,
+            userId
+              ? {
+                user_id: userId,
+              }
+              : null
+          );
+          res.setHeader('content-type', 'application/json');
+          res.send(data);
         } else {
           res.status(404).send('invalid id');
         }

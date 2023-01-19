@@ -69,7 +69,14 @@
         </div>
     </div>
     <script>
-
+      function getUrlVars() {
+          var vars = {};
+          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+          function(m,key,value) {
+            vars[key] = value;
+          });
+          return vars;
+        }
         function onEvent(e){
             console.log('Widget Event: ')
             console.log(e)
@@ -155,8 +162,10 @@
             },
             methods: {
                 initWidget(onFinish, jobType){
+                  let params = getUrlVars(window.location);
                     sophtron.init({ 
-                            env: 'preview',
+                            env: params.env || 'preview',
+                            user_id: params.user_id,
                             jobType,
                             onShow: onEvent,
                             onInit: onEvent,
@@ -178,13 +187,15 @@
                     this.identityVc.detail = !this.identityVc.detail;
                 },
                 showBankingVc(){
-                    axios.get(`/example/did/vc/banking/${this.connection.provider}/${this.connection.id}`).then(res => {
+                  let {user_id} = getUrlVars(window.location);
+                    axios.get(`/example/did/vc/banking/${this.connection.provider}/${this.connection.id}/${user_id}`).then(res => {
                         this.bankingVc.show = true;
                         this.bankingVc.obj = res.data;
                     });
                 },
                 showIdentityVc(){
-                    axios.get(`/example/did/vc/identity/${this.connection.provider}/${this.connection.id}`).then(res => {
+                  let {user_id} = getUrlVars(window.location);
+                    axios.get(`/example/did/vc/identity/${this.connection.provider}/${this.connection.id}/${user_id}`).then(res => {
                         this.identityVc.show = true;
                         this.identityVc.obj = res.data;
                     });
@@ -202,11 +213,11 @@
                     return true;
                 },
                 connectForIdentity(){
-                    this.initWidget(this.onIdentityFinish, 'identify');
+                    this.initWidget(this.onIdentityFinish, 'vc_identity');
                     sophtron.show();
                 },
                 connectForBanking(){
-                    this.initWidget(this.onBankingFinish, 'verify');
+                    this.initWidget(this.onBankingFinish, 'vc_accounts');
                     sophtron.show();
                 }
             }

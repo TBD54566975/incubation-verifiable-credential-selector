@@ -12,6 +12,15 @@
     "no-param-reassign": "off",
     "max-len": "off",
     "no-nested-ternary": "off",
+    "quotes": "off",
+    "@typescript-eslint/quotes": "off",
+    // [
+    //   "error",
+    //   "single",
+    //   {
+    //     "allowTemplateLiterals": true
+    //   }
+    // ],
     "prettier/prettier": [
       "error",
       {

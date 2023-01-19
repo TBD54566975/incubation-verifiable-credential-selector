@@ -48,6 +48,12 @@ export enum ChallengeType {
   TOKEN,
 }
 
+export enum VcType {
+  IDENTITY,
+  ACCOUNTS,
+  TRANSACTIONS,
+}
+
 export interface Challenge {
   id: string;
   question?: string | null;
@@ -100,6 +106,7 @@ export interface Connection {
   has_accounts?: boolean | null;
   has_transactions?: boolean | null;
   is_authenticated?: boolean | null;
+  vc?: string | null;
 }
 export interface UpdateConnectionRequest {
   id: string | undefined;
@@ -156,4 +163,9 @@ export interface ProviderApiClient {
     connectionIdOrJobId: string,
     userId?: string
   ): Promise<Connection | undefined>;
+  GetVc(
+    connection_id: string,
+    vc_type: VcType,
+    userId?: string
+  ): Promise<object>;
 }

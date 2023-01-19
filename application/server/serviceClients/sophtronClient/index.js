@@ -3,7 +3,7 @@ const http = require('../http');
 
 function post(path, data) {
   const authHeader = http.buildAuthCode('post', path);
-  return http.post(config.ApiServiceEndpoint + path, data, {
+  return http.post(config.SophtronApiServiceEndpoint + path, data, {
     Authorization: authHeader,
   });
 }
@@ -52,7 +52,9 @@ module.exports = {
         InstitutionType: 'All',
       });
       if (data?.length > 0) {
-        return data.sort((a,b) => a.InstitutionName.length - b.InstitutionName.length).slice(0, 9);
+        return data
+          .sort((a, b) => a.InstitutionName.length - b.InstitutionName.length)
+          .slice(0, 9);
       }
       return data;
     }
@@ -149,6 +151,8 @@ module.exports = {
     });
   },
   ping() {
-    return http.get(`${config.ApiServiceEndpoint}/UserInstitution/Ping`);
+    return http.get(
+      `${config.SophtronApiServiceEndpoint}/UserInstitution/Ping`
+    );
   },
 };

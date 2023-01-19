@@ -6,6 +6,7 @@ import type {
   Institutions,
   ProviderApiClient,
   UpdateConnectionRequest,
+  VcType,
 } from '../../../shared/contract';
 import {
   Challenge,
@@ -219,5 +220,14 @@ export class MxApi implements ProviderApiClient {
       },
     });
     return !!res;
+  }
+
+  /* eslint-disable unused-imports/no-unused-vars */
+  GetVc(
+    connection_id: string,
+    vc_type: VcType,
+    userId?: string
+  ): Promise<object> {
+    throw new Error('Method not implemented.');
   }
 }
