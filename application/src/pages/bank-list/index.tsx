@@ -56,7 +56,7 @@ const BankListScreen: React.FC = () => {
         {(institutions || []).map((bank: Institution) => (
           <button
             key={bank.id}
-            className={`flex w-full flex-row items-center border-b border-[#E7E7E7] p-4`}
+            className={'flex w-full flex-row items-center border-b border-[#E7E7E7] p-4'}
             onClick={() => {
               dispatch(
                 selectInstitutionAsync({ instituion: bank, navigate: true })

@@ -18,7 +18,7 @@ export default {
     http.post<Institutions | WidgetError>('/api/search', { query: term }),
   selectInstitution: (ins: Institution) =>
     http.post<
-      { institution: Institution; credentials: Array<Credential> } | WidgetError
+    { institution: Institution; credentials: Array<Credential> } | WidgetError
     >('/api/selectInstitution', ins),
   login: (
     credentials: Array<Credential>,

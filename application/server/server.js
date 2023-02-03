@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const config = require('./config');
 const { contextHandler } = require('./infra/context.ts');
 const api = require('./api');
@@ -50,15 +51,22 @@ Object.keys(api).forEach((key) => {
   });
 });
 
-app.get('*', function (req, res) {
-  req.metricsPath = '/catchall';
-  const resourcePath = `${config.ResourcePrefix}${config.ResourceVersion}${req.path}`;
-  if (req.path.indexOf('_next/webpack-hmr') === -1) {
-    http.stream(resourcePath, null, res);
-  } else {
-    res.sendStatus(404);
-  }
-});
+if(config.ResourcePrefix !== 'local'){
+  app.get('*', function (req, res) {
+    logger.info(`serving resources from ${config.ResourcePrefix}`)
+    req.metricsPath = '/catchall';
+    const resourcePath = `${config.ResourcePrefix}${config.ResourceVersion}${req.path}`;
+    if (req.path.indexOf('_next/webpack-hmr') === -1) {
+      http.stream(resourcePath, null, res);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+}else{
+  logger.info(`using local resources from "../out"`)
+  app.use('/', express.static(path.join(__dirname, '../out')));
+}
+
 
 app.listen(config.Port, () => {
   const message = `Server is running on port ${config.Port}, env: ${config.Env}`;

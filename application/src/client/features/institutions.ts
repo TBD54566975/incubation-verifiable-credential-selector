@@ -111,9 +111,9 @@ function mfa(job_id: string, dispatch: any) {
 }
 
 export const initAsync = createAsyncThunk<
-  InitialRequest | undefined,
-  { query: ParsedUrlQuery; connection_id?: string | undefined },
-  { state: RootState }
+InitialRequest | undefined,
+{ query: ParsedUrlQuery; connection_id?: string | undefined },
+{ state: RootState }
 >('institution/init', async ({ query }, { dispatch }) => {
   const { provider, institution_id, bankId, user_id, job_type, connection_id } =
     query;
@@ -131,9 +131,9 @@ export const initAsync = createAsyncThunk<
 });
 
 export const loadInstitutionsAsync = createAsyncThunk<
-  Institutions | undefined,
-  string | undefined,
-  { state: RootState }
+Institutions | undefined,
+string | undefined,
+{ state: RootState }
 >('institution/list', async (query, { dispatch }) => {
   if (!query) {
     const res = await api.institutions();
@@ -153,9 +153,9 @@ export const loadInstitutionsAsync = createAsyncThunk<
 });
 
 export const loginAsync = createAsyncThunk<
-  Connection | undefined,
-  Credential[],
-  { state: RootState }
+Connection | undefined,
+Credential[],
+{ state: RootState }
 >('institution/login', async (creds, thunkAPI) => {
   const { selected_institution } = thunkAPI.getState().instituion;
   const { connection_id } = thunkAPI.getState().instituion.request!;
@@ -171,8 +171,8 @@ export const loginAsync = createAsyncThunk<
   return ret;
 });
 export const selectInstitutionAsync = createAsyncThunk<
-  { institution: Institution; credentials: Array<Credential> } | undefined,
-  { instituion: Institution; navigate: boolean }
+{ institution: Institution; credentials: Array<Credential> } | undefined,
+{ instituion: Institution; navigate: boolean }
 >(
   'institution/selectInstitution',
   async ({ instituion, navigate }, { dispatch }) => {
@@ -196,9 +196,9 @@ export const selectInstitutionAsync = createAsyncThunk<
   }
 );
 export const answerChallengeAsync = createAsyncThunk<
-  boolean,
-  Array<Challenge>,
-  { state: RootState }
+boolean,
+Array<Challenge>,
+{ state: RootState }
 >('connection/answerChallenge', async (challenges, { dispatch, getState }) => {
   const res = await api.answerChallenge(challenges);
   if (checkError(res as WidgetError, dispatch)) {

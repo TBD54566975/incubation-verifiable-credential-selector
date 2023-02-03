@@ -183,9 +183,9 @@ export async function mfa(job_id: string, context: Context) {
           /* eslint-disable no-await-in-loop */
           return res;
         } catch (err) {
-          logger.error(`Failed to retrieve VC`, err);
+          logger.error('Failed to retrieve VC', err);
         }
-        logger.error(`Retrying vc retrieval`);
+        logger.error('Retrying vc retrieval');
         await new Promise((resolve, _) => {
           setTimeout(resolve, 500);
         });

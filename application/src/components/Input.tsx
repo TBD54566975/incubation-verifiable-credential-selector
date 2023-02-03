@@ -37,12 +37,12 @@ const Input: React.FC<Props> = ({
         isError
           ? 'border-[#F15652] bg-[#F156520D]'
           : isFocusOnTextInput
-          ? 'border-[#0C95DF] bg-[#F3FBFF]'
-          : 'border-[#BBBBBB] bg-[#FAFAFA]'
+            ? 'border-[#0C95DF] bg-[#F3FBFF]'
+            : 'border-[#BBBBBB] bg-[#FAFAFA]'
       } mb-5 flex w-full flex-row items-center rounded-xl border py-4 px-5 ${className} `}
       onClick={() => focusText()}
     >
-      {icon ? <div className={`mr-4 w-5 items-center`}>{icon}</div> : null}
+      {icon ? <div className={'mr-4 w-5 items-center'}>{icon}</div> : null}
       <input
         type={isPassword ? 'password' : 'text'}
         className="w-full bg-transparent font-sans text-base leading-5 text-black placeholder:text-[#01293B80] focus:outline-none"

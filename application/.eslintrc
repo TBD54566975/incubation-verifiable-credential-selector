@@ -21,8 +21,9 @@
     //     "allowTemplateLiterals": true
     //   }
     // ],
-    "prettier/prettier": [
-      "error",
+    "prettier/prettier":
+    [
+      "off",
       {
         "singleQuote": true,
         "endOfLine": "auto",
@@ -45,8 +46,8 @@
       "extends": [
         "plugin:tailwindcss/recommended",
         "airbnb-typescript",
-        "next/core-web-vitals",
-        "plugin:prettier/recommended"
+        "next/core-web-vitals"
+        //"plugin:prettier/recommended"
       ],
       "parserOptions": {
         "project": ["./tsconfig.json", "./server/tsconfig.json"]

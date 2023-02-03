@@ -18,6 +18,7 @@ COPY ./ ./
 
 RUN npm install --legacy-peer-deps
 RUN npm install ts-node -g
+RUN npm run build-client
 #RUN npm run build-server
 
 # FROM build
@@ -27,8 +28,9 @@ RUN npm install ts-node -g
 #COPY --from=build-frontend /app/dist ./views
 
 ENV Env prod
+ENV ResourcePrefix 'local'
 
 EXPOSE 8080
-ENTRYPOINT ["./entrypoint.sh"]
+#ENTRYPOINT ["./entrypoint.sh"]
 
-#CMD [ "ts-node", "./server/server.js" ]
+CMD [ "ts-node", "./server/server.js" ]
