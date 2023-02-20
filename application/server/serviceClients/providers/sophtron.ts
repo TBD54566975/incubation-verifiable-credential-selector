@@ -274,6 +274,13 @@ export class SophtronApi implements ProviderApiClient {
           entityId
         );
         break;
+      case 'fullhistory':
+        ret = await this.apiClient.CreateUserInstitutionWithFullHistory (
+          username,
+          password,
+          entityId
+        );
+        break;
       case 'auth':
       case 'bankauth':
       case 'verify':

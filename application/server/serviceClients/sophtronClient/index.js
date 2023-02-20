@@ -106,6 +106,16 @@ module.exports = {
     };
     return post(url, data);
   },
+  CreateUserInstitutionWithFullHistory(username, password, institutionId) {
+    const url = '/UserInstitution/CreateUserInstitutionWithFullHistory';
+    const data = {
+      UserName: username,
+      Password: password,
+      InstitutionID: institutionId,
+      UserID: config.SophtronApiUserId,
+    };
+    return post(url, data);
+  },
   CreateUserInstitutionWithFullAccountNumbers(
     username,
     password,
