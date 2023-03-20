@@ -7,7 +7,7 @@
 # RUN npm run build
 
 #FROM node:17 AS build
-FROM node:17 
+FROM node:18 AS build
 
 # Create app directory
 WORKDIR /app
@@ -17,15 +17,16 @@ WORKDIR /app
 COPY ./ ./
 
 RUN npm install --legacy-peer-deps
-RUN npm install ts-node -g
 RUN npm run build-client
 #RUN npm run build-server
 
-# FROM build
-# WORKDIR /app
-# COPY ./server/dist/ ./
-
-#COPY --from=build-frontend /app/dist ./views
+FROM node:18
+WORKDIR /app
+COPY --from=build /app/server/ ./server
+COPY --from=build /app/shared/ ./shared
+COPY --from=build /app/out/ ./out
+COPY --from=build /app/node_modules/ ./node_modules
+RUN npm install ts-node -g
 
 ENV Env prod
 ENV ResourcePrefix 'local'
