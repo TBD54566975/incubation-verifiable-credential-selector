@@ -130,6 +130,18 @@ module.exports = {
     };
     return post(url, data);
   },
+  CreateUserInstitutionWithAllPlusProfile(username, 
+    password, 
+    institutionId){
+    var url = '/UserInstitution/CreateUserInstitutionWithAllPlusProfile';
+    var data = {
+        UserName: username,
+        Password: password,
+        InstitutionID: institutionId,
+        UserID: config.SophtronApiUserId,
+      };
+    return post(url, data);
+  },
   CreateUserInstitutionWOJob(username, password, institutionId) {
     const url = '/UserInstitution/CreateUserInstitutionWOJob';
     return post(url, {

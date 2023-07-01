@@ -1,0 +1,8 @@
+{
+  "appId": "vcs",
+  "appName": "vcs",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "out",
+  "cordova": {}
+}

@@ -274,6 +274,20 @@ export class SophtronApi implements ProviderApiClient {
           entityId
         );
         break;
+      case 'aggregate_all':
+      case 'aggregate_everything':
+      case 'aggregate_identity_verification':
+      case 'all':
+      case 'everything':
+      case 'agg_everything':
+      case 'agg_all':
+        ret = await this.apiClient.CreateUserInstitutionWithAllPlusProfile(
+          username,
+          password,
+          entityId
+        );
+        break;
+      case 'aggregate_extendedhistory':
       case 'fullhistory':
         ret = await this.apiClient.CreateUserInstitutionWithFullHistory(
           username,
